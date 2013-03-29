@@ -1,6 +1,6 @@
 package br.ufba.graph;
 
-public class Grafo {
+public class Graph {
 	private Vertice vertices[];
 	private Aresta arestas[];
 
@@ -11,7 +11,7 @@ public class Grafo {
 
 	private int processo;
 
-	public Grafo(int max_vertices, int max_arestas) {
+	public Graph(int max_vertices, int max_arestas) {
 		setVertices(new Vertice[max_vertices]);
 		setArestas(new Aresta[max_arestas]);
 	}

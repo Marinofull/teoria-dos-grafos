@@ -9,7 +9,7 @@ import javax.swing.JApplet;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import br.ufba.graph.Grafo;
+import br.ufba.graph.Graph;
 import br.ufba.graph.algorithm.GraphAlgorithm;
 import br.ufba.graph.algorithm.arvoregeradoraminima.Kruskal;
 import br.ufba.ui.GraphDrawer;
@@ -33,12 +33,12 @@ public class GrafoApplet extends JApplet {
 	 * Controle
 	 */
 
-	Grafo mGrafo;
+	Graph mGrafo;
 	GraphDrawer mGraphDrawer;
 	GraphAlgorithm mAlgorithm;
 
 	public void init() {
-		mGrafo 			= new Grafo( 100, 200 );
+		mGrafo 			= new Graph( 100, 200 );
 		mGraphDrawer 	= new GraphDrawer(mGrafo, getGraphics());
 		mAlgorithm 		= new Kruskal(mGrafo);
 		
@@ -48,7 +48,7 @@ public class GrafoApplet extends JApplet {
 
 		JPanel buttonsPanel = new JPanel();
 		calcularBtn 	= new JButton("Next");
-		reiniciarBtn 	= new JButton("Recargar");
+		reiniciarBtn 	= new JButton("New");
 		playBtn			= new JButton("Play");
 
 		panel.setBackground(Color.lightGray);

@@ -1,7 +1,7 @@
 package br.ufba.graph.algorithm;
 
 import br.ufba.graph.Aresta;
-import br.ufba.graph.Grafo;
+import br.ufba.graph.Graph;
 import br.ufba.graph.Vertice;
 
 public abstract class GraphAlgorithm {
@@ -9,10 +9,10 @@ public abstract class GraphAlgorithm {
 	protected int idx[];
 	protected int u;
 	protected int usel;
-	protected Grafo mGrafo;
+	protected Graph mGrafo;
 	private boolean started = false;
 	
-	public GraphAlgorithm(Grafo grafo) {
+	public GraphAlgorithm(Graph grafo) {
 		mGrafo = grafo;
 		idx = new int[200];
 	}

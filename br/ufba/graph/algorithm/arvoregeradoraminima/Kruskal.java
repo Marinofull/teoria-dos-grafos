@@ -1,6 +1,6 @@
 package br.ufba.graph.algorithm.arvoregeradoraminima;
 
-import br.ufba.graph.Grafo;
+import br.ufba.graph.Graph;
 import br.ufba.graph.algorithm.GraphAlgorithm;
 
 
@@ -8,7 +8,7 @@ public class Kruskal extends GraphAlgorithm{
 	
 	private int step = 1;
 
-	public Kruskal(Grafo grafo) {
+	public Kruskal(Graph grafo) {
 		super(grafo);
 	}	
 	

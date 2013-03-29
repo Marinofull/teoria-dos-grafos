@@ -5,15 +5,15 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import br.ufba.graph.Aresta;
-import br.ufba.graph.Grafo;
+import br.ufba.graph.Graph;
 import br.ufba.graph.Vertice;
 
 public class GraphDrawer {
 	
-	private Grafo mGrafo;
+	private Graph mGrafo;
 	private Graphics mGraphics;
 	
-	public GraphDrawer(Grafo grafo, Graphics graphics) {
+	public GraphDrawer(Graph grafo, Graphics graphics) {
 		mGrafo = grafo;
 		mGraphics = graphics;
 	}
