@@ -1,11 +1,12 @@
-package ui;
+package br.ufba.ui;
 
-import graph.Aresta;
-import graph.Grafo;
-import graph.Vertice;
 
 import java.awt.Color;
 import java.awt.Graphics;
+
+import br.ufba.graph.Aresta;
+import br.ufba.graph.Grafo;
+import br.ufba.graph.Vertice;
 
 public class GraphDrawer {
 	

@@ -1,6 +1,4 @@
-import graph.Grafo;
-import graph.algorithm.GraphAlgorithm;
-import graph.algorithm.arvoregeradoraminima.Kruskal;
+package br.ufba;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -11,7 +9,11 @@ import javax.swing.JApplet;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import ui.GraphDrawer;
+import br.ufba.graph.Grafo;
+import br.ufba.graph.algorithm.GraphAlgorithm;
+import br.ufba.graph.algorithm.arvoregeradoraminima.Kruskal;
+import br.ufba.ui.GraphDrawer;
+
 
 
 public class GrafoApplet extends JApplet {

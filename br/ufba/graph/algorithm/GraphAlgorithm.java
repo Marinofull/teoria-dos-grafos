@@ -1,8 +1,8 @@
-package graph.algorithm;
+package br.ufba.graph.algorithm;
 
-import graph.Aresta;
-import graph.Grafo;
-import graph.Vertice;
+import br.ufba.graph.Aresta;
+import br.ufba.graph.Grafo;
+import br.ufba.graph.Vertice;
 
 public abstract class GraphAlgorithm {
 

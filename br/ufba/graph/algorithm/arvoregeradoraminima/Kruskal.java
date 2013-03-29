@@ -1,7 +1,7 @@
-package graph.algorithm.arvoregeradoraminima;
+package br.ufba.graph.algorithm.arvoregeradoraminima;
 
-import graph.Grafo;
-import graph.algorithm.GraphAlgorithm;
+import br.ufba.graph.Grafo;
+import br.ufba.graph.algorithm.GraphAlgorithm;
 
 
 public class Kruskal extends GraphAlgorithm{

@@ -1,4 +1,4 @@
-package graph;
+package br.ufba.graph;
 
 public class Aresta {
 
