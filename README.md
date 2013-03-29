@@ -1,10 +1,9 @@
 Algoritmos de Teoria dos Grafos
 =====================================
-Universidade Federal da Bahia 
-Disciplina: Teoria dos Grafos 
-Professor: Stephen 
+Universidade Federal da Bahia   
+Disciplina: Teoria dos Grafos   
+Professor: Stephen   
 
-Título: Implementação de algoritmos de grafos 
 
 Equipe
 ------------------------------------
