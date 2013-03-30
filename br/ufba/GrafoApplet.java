@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 
 import br.ufba.graph.Graph;
 import br.ufba.graph.algorithm.GraphAlgorithm;
-import br.ufba.graph.algorithm.arvoregeradoraminima.Kruskal;
+import br.ufba.graph.algorithm.minimumspanningtree.Kruskal;
 import br.ufba.ui.GraphDrawer;
 
 
@@ -97,7 +97,6 @@ public class GrafoApplet extends JApplet {
 		mGraphDrawer.desenharGrafo();
 		if( last ){
 			calcularBtn.setEnabled(false);
-			mAlgorithm.refresh();
 			playBtn.setEnabled(false);
 		}
 		return last;
@@ -107,7 +106,8 @@ public class GrafoApplet extends JApplet {
 		playBtn.setEnabled(true);
 		calcularBtn.setEnabled(true);
 		panel.paint(getGraphics());
-		mGrafo.criarVerticesAleatorios();
+		mGrafo.makeRandomGraph();
+		mAlgorithm.init();
 		mGraphDrawer.desenharGrafo();
 	}
 

@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import br.ufba.graph.Aresta;
+import br.ufba.graph.Aresta.Status;
 import br.ufba.graph.Graph;
 import br.ufba.graph.Vertice;
 
@@ -43,8 +44,8 @@ public class GraphDrawer {
 	}
 
 	private void desenharAresta(Graphics g, Aresta aresta) {
-		Vertice vInicio = mGrafo.getVertices()[aresta.positivo];
-		Vertice vFim = mGrafo.getVertices()[aresta.negativo];
+		Vertice vInicio = aresta.u;
+		Vertice vFim = aresta.v;
 
 		int a = vInicio.x - vFim.x;
 		int b = vInicio.y - vFim.y;
@@ -52,32 +53,33 @@ public class GraphDrawer {
 		int x1[] = retornarCoordenadas(-a, -b, vInicio.width, vInicio.height);
 		int x2[] = retornarCoordenadas(a, b, vFim.width, vFim.height);
 
-		if (aresta.selecionada == -1)
+		if (aresta.status == Status.WAITING)
 			g.setColor(Color.blue);
-		else if (aresta.selecionada == -2)
+		else if (aresta.status == Status.DISCARDED)
 			g.setColor(Color.gray);
-		else if (aresta.selecionada == 1)
+		else if (aresta.status == Status.PROCESSING)
 			g.setColor(Color.orange);
-		else
+		else if (aresta.status == Status.TAKED )
 			g.setColor(Color.green);
+		
 		g.drawLine(vInicio.x + x1[0], vInicio.y + x1[1], vFim.x + x2[0], vFim.y + x2[1]);
 
-		int w = g.getFontMetrics().stringWidth(String.valueOf(aresta.longitude));
+		int w = g.getFontMetrics().stringWidth(String.valueOf(aresta.weight));
 		int h = g.getFontMetrics().getHeight();
 		
 		g.setColor(Color.LIGHT_GRAY);
 		g.fillRect(((vInicio.x + vFim.x) - w) / 2, ((vInicio.y + vFim.y) - h) / 2, w, h);
 
-		if (aresta.selecionada == -1)
+		if (aresta.status == Status.WAITING)
 			g.setColor(Color.white);
-		else if (aresta.selecionada == -2)
+		else if (aresta.status == Status.DISCARDED)
 			g.setColor(Color.darkGray);
-		else if (aresta.selecionada == 1)
+		else if (aresta.status == Status.PROCESSING)
 			g.setColor(Color.orange);
-		else
+		else if (aresta.status == Status.TAKED )
 			g.setColor(Color.red);
 
-		g.drawString(String.valueOf(aresta.longitude), ((vInicio.x + vFim.x) - w) / 2,
+		g.drawString(String.valueOf(aresta.weight), ((vInicio.x + vFim.x) - w) / 2,
 				((vInicio.y + vFim.y) - h) / 2 + g.getFontMetrics().getAscent());
 	}
 

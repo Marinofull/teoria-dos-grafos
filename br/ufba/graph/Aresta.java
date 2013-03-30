@@ -1,15 +1,20 @@
 package br.ufba.graph;
 
+
 public class Aresta {
+	
+	public enum Status{
+		WAITING, DISCARDED, PROCESSING, TAKED
+	};
 
-	public int positivo;
+	public Vertice u;
 
-	public int negativo;
+	public Vertice v;
 
-	public int longitude;
+	public int weight;
 
-	public int selecionada;
+	public Status status;
 
-	String nome;
+	String name;
 
 }

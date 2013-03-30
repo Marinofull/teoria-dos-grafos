@@ -1,15 +1,13 @@
 package br.ufba.graph;
 
+import br.ufba.graph.Aresta.Status;
+
 public class Graph {
 	private Vertice vertices[];
 	private Aresta arestas[];
 
 	private int verticesCount;
 	private int arestasCount;
-	private int num;
-	private int den;
-
-	private int processo;
 
 	public Graph(int max_vertices, int max_arestas) {
 		setVertices(new Vertice[max_vertices]);
@@ -41,7 +39,7 @@ public class Graph {
 	}
 
 
-	public void criarVerticesAleatorios() {
+	public void makeRandomGraph() {
 		verticesCount = (int) (10D + Math.random() * 10D) / 2;
 		arestasCount = 0;
 		int vertices_count = 1;
@@ -59,11 +57,11 @@ public class Graph {
 
 		for (int j = 0; j < verticesCount; j++) {
 			for (int i = j + 1; i < verticesCount; i++)
-				if (Math.random() * 10D <= 6D) {
+				if (Math.random() * 10D <= 8D) {
 					Aresta edge = new Aresta();
-					edge.positivo = i;
-					edge.negativo = j;
-					edge.longitude = 1 + (int) (Math.random() * 20D);
+					edge.u = vertices[i];
+					edge.v = vertices[j];
+					edge.weight = 1 + (int) (Math.random() * 20D);
 					getArestas()[arestasCount] = edge;
 					arestasCount++;
 				}
@@ -71,13 +69,6 @@ public class Graph {
 		}
 
 		for (int i = 0; i < arestasCount; i++)
-			getArestas()[i].selecionada = -1;
-
-		den = 0;
-		num = 128;
-		for (int i = 0; i < arestasCount; i++)
-			if (getArestas()[i].longitude > den)
-				den = getArestas()[i].longitude;
-		processo = 2;
+			getArestas()[i].status = Status.WAITING;
 	}	
 }
