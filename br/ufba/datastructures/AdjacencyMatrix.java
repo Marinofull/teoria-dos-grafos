@@ -1,5 +1,9 @@
 package br.ufba.datastructures;
 
+/**
+ * @author niltonvasques
+ * 
+ */
 public class AdjacencyMatrix {
 
 	private static final int MEM_BLOCK_SIZE = 32;
@@ -40,10 +44,9 @@ public class AdjacencyMatrix {
 		int adjacencys[] = new int[stride];
 		
 		int bitIndex		= (element*stride);
-		int index 			= (int) (bitIndex/MEM_BLOCK_SIZE);
 		
 		for( int i = 0; i < stride; i++){
-			int x = (i/MEM_BLOCK_SIZE) + index;
+			int x = ((bitIndex+i)/MEM_BLOCK_SIZE);
 			int y = (bitIndex % MEM_BLOCK_SIZE) + i;
 			
 			int ret = (matrix[x] >> y) & 0x01;
@@ -51,5 +54,16 @@ public class AdjacencyMatrix {
 		}		
 		
 		return adjacencys;
+	}
+	
+	public boolean checkAdjacency(int u, int v){
+		
+		int bitIndex		= (u*stride);
+		int index 			= (int) (bitIndex/MEM_BLOCK_SIZE);
+		
+		int x = (v/MEM_BLOCK_SIZE) + index;
+		int y = (bitIndex % MEM_BLOCK_SIZE) + v;
+		
+		return ((matrix[x] >> y) & 0x01) == 0x01;
 	}
 }
