@@ -2,7 +2,7 @@ package br.ufba.datastructures;
 
 /**
  * @author niltonvasques
- * 
+ * http://pt.wikipedia.org/wiki/Matriz_de_adjac%C3%AAncia
  */
 public class AdjacencyMatrix {
 
@@ -44,10 +44,11 @@ public class AdjacencyMatrix {
 		int adjacencys[] = new int[stride];
 		
 		int bitIndex		= (element*stride);
+		int bitRemainder	= (bitIndex % MEM_BLOCK_SIZE);
 		
 		for( int i = 0; i < stride; i++){
 			int x = ((bitIndex+i)/MEM_BLOCK_SIZE);
-			int y = (bitIndex % MEM_BLOCK_SIZE) + i;
+			int y =  bitRemainder + i;
 			
 			int ret = (matrix[x] >> y) & 0x01;
 			adjacencys[i] = ret;		

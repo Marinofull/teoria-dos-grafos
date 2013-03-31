@@ -4,10 +4,15 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JApplet;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JRadioButtonMenuItem;
 
 import br.ufba.graph.Graph;
 import br.ufba.graph.algorithm.GraphAlgorithm;
@@ -21,7 +26,7 @@ import br.ufba.ui.GraphDrawer;
  * @author niltonvasques
  *
  */
-public class GrafoApplet extends JApplet {
+public class GraphApplet extends JApplet {
 
 	/*
 	 * Interface
@@ -45,7 +50,7 @@ public class GrafoApplet extends JApplet {
 	public void init() {
 		mGrafo 			= new Graph( 100, 200 );
 		mGraphDrawer 	= new GraphDrawer(mGrafo, getGraphics());
-		mAlgorithm 		= new Prim(mGrafo);
+		mAlgorithm 		= new Kruskal(mGrafo);
 		
 		panel = new JPanel(true);
 
@@ -88,9 +93,32 @@ public class GrafoApplet extends JApplet {
 			}
 		});
 		
+		 //Create the radio buttons.
+	    JRadioButton kruskalButton = new JRadioButton("Kruskal");
+	    kruskalButton.setMnemonic(KeyEvent.VK_B);
+	    kruskalButton.setActionCommand("Kruskal");
+	    kruskalButton.setSelected(true);
+
+	    JRadioButton primButton = new JRadioButton("Prim");
+	    primButton.setMnemonic(KeyEvent.VK_C);
+	    primButton.setActionCommand("Prim");
+
+	    //Group the radio buttons.
+	    ButtonGroup group = new ButtonGroup();
+	    group.add(kruskalButton);
+	    group.add(primButton);
+
+	    //Register a listener for the radio buttons.
+	    kruskalButton.addActionListener(alghs);
+	    primButton.addActionListener(alghs);
+	
+	    
+		
 		buttonsPanel.add(playBtn);
 		buttonsPanel.add(calcularBtn);
 		buttonsPanel.add(reiniciarBtn);
+		buttonsPanel.add(kruskalButton);
+		buttonsPanel.add(primButton);
 		add(panel, BorderLayout.CENTER);
 		add(buttonsPanel, BorderLayout.SOUTH);
 		
@@ -115,6 +143,18 @@ public class GrafoApplet extends JApplet {
 		mAlgorithm.init();
 		mGraphDrawer.desenharGrafo();
 	}
+	
+	ActionListener alghs = new ActionListener() {		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if( e.getActionCommand().equals("Kruskal")){
+				mAlgorithm = new Kruskal(mGrafo);
+			}else if(e.getActionCommand().equals("Prim") ){
+				mAlgorithm = new Prim(mGrafo);
+			}
+			loadGraph();			
+		}
+	};
 
 	
 }
