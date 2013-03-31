@@ -1,8 +1,14 @@
-Algoritmos de Teoria dos Grafos
+Algoritmos de Grafos
 =====================================
 Universidade Federal da Bahia   
 Disciplina: Teoria dos Grafos   
 Professor: Stephen   
+
+
+Árvore Geradora Mínima
+-----------------------------------
+* Kruskal
+* Prim
 
 
 Equipe
