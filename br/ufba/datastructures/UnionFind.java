@@ -1,7 +1,13 @@
 package br.ufba.datastructures;
 
-public class UnionFind {
 
+/**
+ * @author niltonvasques
+ * UnionFind data structure
+ * http://en.wikipedia.org/wiki/Disjoint-set_data_structure
+ */
+public class UnionFind {
+	
 	public interface UnionElement{
 
 		public UnionElement getRoot();

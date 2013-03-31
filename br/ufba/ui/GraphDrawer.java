@@ -9,6 +9,10 @@ import br.ufba.graph.Aresta.Status;
 import br.ufba.graph.Graph;
 import br.ufba.graph.Vertice;
 
+/**
+ * @author niltonvasques
+ *
+ */
 public class GraphDrawer {
 	
 	private Graph mGrafo;

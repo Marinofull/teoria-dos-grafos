@@ -9,6 +9,10 @@ import br.ufba.graph.Vertice;
 import br.ufba.graph.algorithm.GraphAlgorithm;
 
 
+/**
+ * @author niltonvasques
+ * http://en.wikipedia.org/wiki/Kruskal's_algorithm
+ */
 public class Kruskal implements GraphAlgorithm{
 	
 	private Graph mGraph;

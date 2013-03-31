@@ -1,5 +1,6 @@
 package br.ufba.graph;
 
+import br.ufba.datastructures.AdjacencyMatrix;
 import br.ufba.graph.Aresta.Status;
 
 public class Graph {
@@ -11,7 +12,7 @@ public class Graph {
 
 	public Graph(int max_vertices, int max_arestas) {
 		setVertices(new Vertice[max_vertices]);
-		setArestas(new Aresta[max_arestas]);
+		setArestas(new Aresta[max_arestas]);		
 	}
 
 	public Vertice[] getVertices() {
@@ -37,6 +38,16 @@ public class Graph {
 	public int getArestasCount(){
 		return arestasCount;
 	}
+	
+	public Aresta getAresta(int u, int v){
+		for(int i = 0; i < arestasCount; i++) {
+			if( (arestas[i].u.index == u && arestas[i].v.index == v) ||
+					( arestas[i].u.index == v && arestas[i].v.index == u ) ){
+				return arestas[i];
+			}
+		}
+		return null;
+	}
 
 
 	public void makeRandomGraph() {
@@ -44,20 +55,21 @@ public class Graph {
 		arestasCount = 0;
 		int vertices_count = 1;
 		for (int i = 0; i < verticesCount; i++) {
-			Vertice node = new Vertice();
-			node.nome = String.valueOf(vertices_count);
+			Vertice vertice = new Vertice();
+			vertice.nome = String.valueOf(vertices_count);
+			vertice.index = i;
 			double ang = (double) (360 / verticesCount) * (double) vertices_count;
-			node.x = 200 + (int) Math.round(170D * Math
+			vertice.x = 200 + (int) Math.round(170D * Math
 					.cos((ang * 6.2831853071795862D) / 360D));
-			node.y = 200 + (int) Math.round(170D * Math
+			vertice.y = 200 + (int) Math.round(170D * Math
 					.sin((ang * 6.2831853071795862D) / 360D));
 			vertices_count++;
-			getVertices()[i] = node;
+			getVertices()[i] = vertice;
 		}
 
 		for (int j = 0; j < verticesCount; j++) {
 			for (int i = j + 1; i < verticesCount; i++)
-				if (Math.random() * 10D <= 8D) {
+				if (Math.random() * 10D <= 4D) {
 					Aresta edge = new Aresta();
 					edge.u = vertices[i];
 					edge.v = vertices[j];
@@ -70,5 +82,13 @@ public class Graph {
 
 		for (int i = 0; i < arestasCount; i++)
 			getArestas()[i].status = Status.WAITING;
+	}
+
+	public AdjacencyMatrix createAdjacencyMatrix() {
+		AdjacencyMatrix m = new AdjacencyMatrix(verticesCount);
+		for( int i = 0; i < arestasCount; i++){
+			m.makeAdjacency(arestas[i].u.index, arestas[i].v.index);
+		}
+		return  m;
 	}	
 }

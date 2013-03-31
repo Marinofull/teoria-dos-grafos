@@ -7,17 +7,13 @@ public class Vertice implements UnionElement{
 
 	public int y;
 
-	public int set;
-
-	public int first;
-
-	public int next;
-
 	public int width;
 
 	public int height;
 	
 	public String nome;
+	
+	public int index;
 	
 	private Vertice root;
 	

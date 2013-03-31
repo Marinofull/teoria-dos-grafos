@@ -12,10 +12,15 @@ import javax.swing.JPanel;
 import br.ufba.graph.Graph;
 import br.ufba.graph.algorithm.GraphAlgorithm;
 import br.ufba.graph.algorithm.minimumspanningtree.Kruskal;
+import br.ufba.graph.algorithm.minimumspanningtree.Prim;
 import br.ufba.ui.GraphDrawer;
 
 
 
+/**
+ * @author niltonvasques
+ *
+ */
 public class GrafoApplet extends JApplet {
 
 	/*
@@ -40,7 +45,7 @@ public class GrafoApplet extends JApplet {
 	public void init() {
 		mGrafo 			= new Graph( 100, 200 );
 		mGraphDrawer 	= new GraphDrawer(mGrafo, getGraphics());
-		mAlgorithm 		= new Kruskal(mGrafo);
+		mAlgorithm 		= new Prim(mGrafo);
 		
 		panel = new JPanel(true);
 
