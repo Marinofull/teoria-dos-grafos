@@ -10,6 +10,7 @@
 \definecolor{jpurple}{rgb}{0.5,0,0.35}
 % Configurando layout para mostrar codigos Java
 \usepackage{listings}
+\DeclareGraphicsExtensions{.pdf,.png,.jpg}
 \lstset{
   language=Java,
   basicstyle=\ttfamily\small, 
@@ -31,6 +32,10 @@
 }
 \pagestyle{plain}
 \pagenumbering{arabic}
+\usepackage[portuguese]{babel}
+\addto\captionsportuguese{
+\renewcommand{\figurename}{Fig.}
+\renewcommand{\tablename}{Tab.}}
 \begin{document}
 \title{Relatório de Implementação dos Algoritmos Referente ao Problema da Árvore Geradora Mínima}
 \author{Bruno Ramos \and Madson Araújo \and Nemuel Leal \and Nilton Vasques}
@@ -44,7 +49,7 @@ A partir dessa noção podemos visualizar que encontrar a árvore geradora míni
 Diante deste cenário alguns matemáticos elaboram soluções para o problema das Árvores Geradoras Mínimas, se utilizando de heurísticas gulosas para encontrar a solução ótima. No presente artigo abordaremos o Algoritmo de Kruskal e o de Prim, como estudo de caso.
 
 \subsection{Algoritmo de Kruskal}
-O algoritmo de Kruskal é um algoritmo guloso, que tem por objetivo encontra uma árvore geradora mínima para um grafo conexo e valorado ( com pesos nas arestas ). Vale ressaltar que para árvores não conexas, o algoritmo encontra floresta geradora mínima, ou seja uma árvore geradora mínima para cada componente conexo do grafo. O algoritmo pode ser enunciado nos seguintes passos:
+O algoritmo de Kruskal é um algoritmo guloso, que tem por objetivo encontrar uma árvore geradora mínima para um grafo conexo e valorado ( com pesos nas arestas ). Vale ressaltar que para árvores não conexas, o algoritmo encontra floresta geradora mínima, ou seja uma árvore geradora mínima para cada componente conexo do grafo. O algoritmo pode ser enunciado nos seguintes passos:
 
 \begin{algorithm}[H]
 \SetAlgoLined
@@ -61,7 +66,7 @@ Criar um conjunto \emph{S} contendo todos as arestas do grafo\;
 \end{algorithm}
 
 \subsubsection{Implementação}
-A implementação se utilizou da estrutura de dados UnionFind. A seguir o pseudo código da implementação com a estrutura de dados UnionFind :\\
+A implementação foi realizada em Java com uso da estrutura de dados de listas encadeadas para manipular os conjuntos disjuntos. O código fonte está disponível no Apêndice A. A seguir o pseudo código da implementação com as manipulações representadas pelas operações Union-Find :\\
 \begin{algorithm}[H]
 \LinesNumbered
 \SetAlgoLined
@@ -106,9 +111,68 @@ A estrutura de dados UnionFind foi implementada na sua forma simples, com o uso 
 \[ \emph{ $\Theta(\mid E\mid log \mid E\mid + \mid E\mid .\Omega(\mid V\mid) + \mid V\mid . \Theta(\mid V\mid)) $}\]
 
 A complexidade pode ser reduzida utilizando de uma estrutura de dados mais refinada para implementar a manipulação dos conjuntos disjuntos, como por exemplo usar uma lista encadeada e \emph{weighted-union heuristic}\cite{Cormem}, consegue-se uma complexidade de \emph{$\Theta(m+nlogn) $} para realizar as \emph{m} operações de \textbf{{\color{blue}make-set}}, \textbf{{\color{blue}find-set}} e \textbf{{\color{blue}union}} \cite{Cormem}.
-
+\newpage
 \subsection{Algoritmo de Prim}
-O algoritmo de Prim...	
+Assim como o algoritmo de Kruskal's o algoritmo de Prim utilizada também uma heurística gulosa para solucinar o problema da Àrvore Geradora Mínima. A heurística utilizada é procurar o caminho mais curto, dentre todos os possíveis, de maneira similar ao algoritmo de Djikstra. O algoritmo de Prim's tem uma propriedade de que as arestas em \emph{A} sempre forma uma árvore simples \emph{Fig.1}.
+
+\begin{figure}[h!]
+	\caption{Ilustração do Algoritmo de Prim}
+	\centering
+	\includegraphics[width=0.5\textwidth]{prim}
+	\label{fig:prim_fig}
+\end{figure}
+
+O algoritmo genérico de Prim procura encontrar o caminho mais curto de um vértice para os vértices vizinhos, até que todos os vértices estejão ligados uns aos outros. O pseudo-código pode ser visualizado logo abaixo:
+
+\begin{algorithm}[H]
+\SetAlgoLined
+\KwData{ Um grafo Conexo }
+\KwResult{ Uma árvore geradora mínima a partir de um grafo conexo }
+Escolha um vértice S para iniciar o subgrafo\;
+\While { há vértices que não estão no subgrafo }{
+	selecione uma aresta segura\;
+	insira a aresta segura e seu vértice no subgrafo\;
+}
+\caption{Pseudo Código do algoritmo de Prim}
+\end{algorithm}
+
+\subsubsection{Implementação}
+Assim como a implementação anterior o algoritmo de Prim's foi implementado em Java e fez uso da Matriz de Adjacências Binária como estrutura de dados para armazenar os vértices adjacentes de um dado vértice u.  O código fonte está disponível no Apêndice A. O pseudo código que foi utilizado para a implementação pode ser visualizado em \emph{Algorithm 4}.
+
+\begin{algorithm}[H]
+\LinesNumbered
+\SetAlgoLined
+\KwData{ V, E}
+\KwResult{ A, W}
+dist[r] $\gets$ 0;
+Q $\gets$ V\;
+\For{ $v \in V-\{r\} $ }{
+	$ dist[r] \gets \infty $\;
+}
+$ pred[r] \gets NULL$\;
+$ A \gets \emptyset$\;
+$ W \gets 0$\;
+\While{  Q não for vazio  }{
+	remover de Q o vértice u com menor valor em dist\;
+	$ W \gets W + dist[u] $\;
+	\If{ $ pred[u] \neq null $ } {
+		$ A \gets A \cup \{(pred[u],u\}$\;
+	}
+	\For{ $ v \in Adj[u] $ }{
+		\If{$v \in Q$ and $dist[v] > w[u,v] $} {
+			$ dist[v] \gets w[u,v] $\;
+			$ pred[v] \gets u $\;
+		}
+	}
+}
+$\textbf{retorne} (A, W)$\;
+\caption{Pseudo Código do algoritmo de Prim}
+\end{algorithm}
+
+\subsubsection{Ánalise de Complexidade}
+
+A complexidade do algoritmo de Prim está diretamente ligada a maneira de como é implementada a estrutura de dados em Q. Uma simples implementação utilizando matrizes de adjacência vai requerer complexidade \emph{$\Theta(\mid V\mid^2)$} e foi a estrutura de dados utilizada neste trabalho. Utilizando de uma heap binária a complexidade cai para \emph{$\Theta(\mid E\mid log\mid V\mid)$}, ainda assim é possível decrescer ainda mais a complexidade utilizando como estrutura de dados uma Fibonacci Heap com complexidade \emph{$\Theta(\mid E\mid+\mid V\mid log\mid V\mid)$} \cite{Cormem}.
+
 
 \newpage
 \appendix
@@ -227,6 +291,119 @@ public class Prim implements GraphAlgorithm{
 
 }
 \end{lstlisting}
+
+\section{\\Código Fonte das Estrutura de Dados Implementadas no Projeto} \label{App:AppendixE}
+\begin{lstlisting}[title=Interface Para Operações Union-Find com Lista Encadeada]
+package br.ufba.datastructures;
+/**
+ * @author niltonvasques
+ * UnionFind data structure
+ * http://en.wikipedia.org/wiki/Disjoint-set_data_structure
+ */
+public class UnionFind {
+
+	public interface UnionElement{
+
+		public UnionElement getRoot();
+		public UnionElement getParent();
+		public void setRoot(UnionElement x);
+		public void setParent(UnionElement x);
+
+	}
+
+	public static void makeSet( UnionElement x ){
+		x.setParent(x);		
+	}
+
+	public static UnionElement find( UnionElement x){
+		if ( x.getParent() == x )
+			return x;
+		else
+			return find(x.getParent());
+	}
+
+	public static void union( UnionElement x, UnionElement y){
+		x.setRoot( find(x) );
+		y.setRoot( find(y) );		
+		x.getRoot().setParent( y.getRoot() );
+	}
+
+}
+\end{lstlisting}
+
+\begin{lstlisting}[title=Implementação da Matriz de Adjacências Binária]
+package br.ufba.datastructures;
+
+/**
+ * @author niltonvasques
+ * http://pt.wikipedia.org/wiki/Matriz_de_adjac%C3%AAncia
+ */
+public class AdjacencyMatrix {
+
+	private static final int MEM_BLOCK_SIZE = 32;
+	int matrix[];
+	int stride;
+	public AdjacencyMatrix(int n) {
+		stride = n;
+		int size = (int)(stride * stride);
+		int lenght = 1 + (size/32);
+		matrix = new int[ lenght ];	
+	}
+
+	public void makeAdjacency(int element, int adjacency ){
+		makeAdjacencyInternal(element, adjacency);
+		makeAdjacencyInternal(adjacency, element);  
+	}
+
+	public void removeAdjacency(int element, int adjacency ){
+		removeAdjacencyInternal(element, adjacency);
+		removeAdjacencyInternal(adjacency, element);  
+	}
+
+	private void makeAdjacencyInternal(int element, int adjacency) {
+		int bitIndex			= (element*stride+adjacency);
+		int index 		= (int) (bitIndex/MEM_BLOCK_SIZE);
+		int shift 		= bitIndex % MEM_BLOCK_SIZE;
+		matrix[index] 	|= (0x01 << shift);
+	}
+
+	private void removeAdjacencyInternal(int element, int adjacency) {
+		int bitIndex			= (element*stride+adjacency);
+		int index 		= (int) (bitIndex/MEM_BLOCK_SIZE);
+		int shift 		= bitIndex % MEM_BLOCK_SIZE;
+		matrix[index] 	&= ~(0x01 << shift);
+	}
+
+	public int[] getAdjacencys(int element){
+		int adjacencys[] = new int[stride];
+
+		int bitIndex		= (element*stride);
+		int bitRemainder	= (bitIndex % MEM_BLOCK_SIZE);
+
+		for( int i = 0; i < stride; i++){
+			int x = ((bitIndex+i)/MEM_BLOCK_SIZE);
+			int y =  bitRemainder + i;
+
+			int ret = (matrix[x] >> y) & 0x01;
+			adjacencys[i] = ret;		
+		}		
+
+		return adjacencys;
+	}
+
+	public boolean checkAdjacency(int u, int v){
+
+		int bitIndex		= (u*stride);
+		int index 			= (int) (bitIndex/MEM_BLOCK_SIZE);
+
+		int x = (v/MEM_BLOCK_SIZE) + index;
+		int y = (bitIndex % MEM_BLOCK_SIZE) + v;
+
+		return ((matrix[x] >> y) & 0x01) == 0x01;
+	}
+}
+\end{lstlisting}
+
 
 \bibliographystyle{plain}
 \bibliography{biblio}
