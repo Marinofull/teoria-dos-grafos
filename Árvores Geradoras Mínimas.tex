@@ -1,34 +1,93 @@
 \documentclass[a4paper,12pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{cludein}
+\usepackage{xcolor}
+\usepackage{algorithm2e}
+\usepackage[toc,page]{appendix}
+\definecolor{light-gray}{gray}{0.5}
+% Definindo novas cores
+\definecolor{verde}{rgb}{0.25,0.5,0.35}
+\definecolor{jpurple}{rgb}{0.5,0,0.35}
+% Configurando layout para mostrar codigos Java
+\usepackage{listings}
+\lstset{
+  language=Java,
+  basicstyle=\ttfamily\small, 
+  keywordstyle=\color{jpurple}\bfseries,
+  stringstyle=\color{red},
+  commentstyle=\color{verde},
+  morecomment=[s][\color{blue}]{/**}{*/},
+  extendedchars=true, 
+  showspaces=false, 
+  showstringspaces=false, 
+  numbers=left,
+  numberstyle=\tiny,
+  breaklines=true, 
+  backgroundcolor=\color{cyan!10}, 
+  breakautoindent=true, 
+  captionpos=b,
+  xleftmargin=0pt,
+  tabsize=4
+}
+\pagestyle{plain}
+\pagenumbering{arabic}
 \begin{document}
-\title{Trabalho de Teoria dos Grafos}
+\title{Relatório de Implementação dos Algoritmos Referente ao Problema da Árvore Geradora Mínima}
 \author{Bruno Ramos \and Madson Araújo \and Nemuel Leal \and Nilton Vasques}
 \date{\today}
 \maketitle
 
-\section{Árvore Geradora Mínima}
-Definição: Seja G=(V,E) um grafo não direcionado e conexo, G'=(V,E') é chamado de subgrafo gerador se possuí os mesmos vértices de G. Portanto se tivermos em G' uma árvore, então o subgrafo é uma árvore geradora. 
+\section{Definição}
+Seja G=(V,E) um grafo não direcionado e conexo, G'=(V,E') é chamado de subgrafo gerador se possuí os mesmos vértices de G. Portanto se tivermos em G' uma árvore, então o subgrafo é uma árvore geradora. 
 Quando G é um grafo conexo, em que cada aresta possui um valor ou peso p(e), o peso total da árvore geradora é \[\sum_{e \in E'}p(e)\] onde p(e) é uma função que retorna o peso da aresta \emph{e}. Á árvore geradora mínima é a árvore G' que possui o menor peso total dentre todas as árvores possíveis do grafo G\cite{nogueira}. Podemos enunciar a função para encontrar a árvore geradora mínima como \[\emph{min}\sum_{e\in E'}p(e)\].
 A partir dessa noção podemos visualizar que encontrar a árvore geradora mínima não é tão trivial assim. Se propormos uma solução pela força bruta, ou seja, encontrar todas as árvores geradoras e assim então verificar qual a que possui o menor peso total. No pior caso quando temos um grafo completo(em que todos os vértices se ligam uns aos outros) teríamos $n^{n-2}$ árvores geradoras onde n é o número de nós, sendo assim teríamos uma solução em tempo exponencial $O(n^n)$ e inviável \nocite{*}.
-Diante deste cenário alguns matemáticos elaboram soluções para o problema das Árvores Geradoras Mínimas, se utilizando de heurísticas gulosas para encontrar a solução ótima. No presente artigo abordaremos o Algoritmo de Kruskal e o de Prim, como estudo de caso .
+Diante deste cenário alguns matemáticos elaboram soluções para o problema das Árvores Geradoras Mínimas, se utilizando de heurísticas gulosas para encontrar a solução ótima. No presente artigo abordaremos o Algoritmo de Kruskal e o de Prim, como estudo de caso.
 
 \subsection{Algoritmo de Kruskal}
-O algoritmo de Kruskal é um algoritmo guloso, que tem por objetivo encontra uma árvore geradora mínima para um grafo conexo e valorado ( com pesos nas arestas ). Vale ressaltar que para árvores não conexas, o algoritmo encontra floresta geradora mínima, ou seja uma árvore geradora mínima para cada componente conexo do grafo.
-\subsubsection{Pseudo-código}
-\begin{enumerate}
-\item Criar uma floresta \emph{F}, onde cada vértice do grafo é uma árvore separada.
-\item Criar um conjunto \emph{S} contendo todos as arestas do grafo.
-\item Enquanto \emph{S} é não vazio:
-	\begin{enumerate}
-	\item Remova um aresta \emph{e} com peso mínimo de S.
-	\item Se \emph{e} conecta duas diferentes árvores, então adicione \emph{e} para floresta \emph{F}.
-	\item Caso contrário, discarte \emph{e}, ou seja se a escolha de \emph{e} gera um circuito em \emph{F}, discarte-a.
-	\end{enumerate}
-\end{enumerate}
+O algoritmo de Kruskal é um algoritmo guloso, que tem por objetivo encontra uma árvore geradora mínima para um grafo conexo e valorado ( com pesos nas arestas ). Vale ressaltar que para árvores não conexas, o algoritmo encontra floresta geradora mínima, ou seja uma árvore geradora mínima para cada componente conexo do grafo. O algoritmo pode ser enunciado nos seguintes passos:
+
+\begin{algorithm}[H]
+\SetAlgoLined
+\KwData{ Um grafo Conexo }
+\KwResult{ Uma árvore geradora mínima a partir de um grafo conexo }
+Criar uma floresta \emph{F}, onde cada vértice do grafo é uma árvore separada\;
+Criar um conjunto \emph{S} contendo todos as arestas do grafo\;
+\While { \emph{S} é não vazio}{
+	Remova um aresta \emph{e} com peso mínimo de S\;
+	Se \emph{e} conecta duas diferentes árvores, então adicione \emph{e} para floresta \emph{F}\;
+	Caso contrário, discarte \emph{e}, ou seja se a escolha de \emph{e} gera um circuito em \emph{F}, discarte-a\;
+}
+\caption{Pseudo Código do algoritmo de Kruskal}
+\end{algorithm}
 
 \subsubsection{Implementação}
-A implementação se utilizou da estrutura de dados UnionFind, para realizar as operações dos passos listados no pseudo código. No item \emph{3.} foi necessário ordernar as arestas pelo seu peso mínimo. Como algoritmo de ordenação utilizamos o QuickSort que ordena uma lista de números em tempo $\Theta\emph{(n log n)}$.
+A implementação se utilizou da estrutura de dados UnionFind. A seguir o pseudo código da implementação com a estrutura de dados UnionFind :\\
+\begin{algorithm}[H]
+\LinesNumbered
+\SetAlgoLined
+\KwData{ V, E}
+\KwResult{ A, W}
+W $\gets$ 0; A $\gets$ vazio\;
+\For{ $v \in V $ }{
+	$ a[v] \gets\textbf{{\color{blue}make-set}(v)}$\;
+}
+$L \gets \textbf{ordene}(E ,w )$\;
+$k \gets 0$\;
+	\While{ $k \neq \mid V\mid-1$ }{
+	\textbf{remove}(L, (u, v ))\;
+	a[u] $\gets$ \textbf{{\color{blue}find-set}(u)}\; 
+	a[v] $\gets$ \textbf{{\color{blue}find-set}(v)}\;
+	\If{ $a[u] \neq a[v]$ }{
+		$aceita (u,v)$\;
+		$A \gets A \cup \{(u, v )\}$\;
+		$W \gets W + w (u, v )$\;
+		$k \gets k + 1$\;
+	}
+	$\textbf{{\color{blue}union}}(a[u], a[v])$\;
+}
+$\textbf{retorne} (A, W)$\;
+\caption{Pseudo Código do algoritmo de Kruskal com UnionFind}
+\end{algorithm}
 
 \subsubsection{Análise de Complexidade}
 A estrutura de dados UnionFind mantém um conjunto de elementos particionados em vários subconjuntos não sobrepostos. O algoritmo que controla essa estrutura possui duas operações principais:
@@ -37,16 +96,140 @@ A estrutura de dados UnionFind mantém um conjunto de elementos particionados em
 \item Union: Faz a união de dois subconjuntos em um só subconjunto.
 \end{itemize}
 
-É interessante notar que com a operação Find, podemos verificar se dois elementos estão no mesmo conjunto, no caso particular do algoritmo de Kruskal, usando Find podemos decidir se a inclusão de uma aresta \emph{e} forma um circuito ou não.
-	Segundo \cite{Cormem} a complexidade do algoritmo UnionFind na sua forma simples é $\Theta\emph{(n)}$ por operação. Sendo assim a complexidade da nossa implementação é $\Theta\emph{(E log E)}$.
- 
+A ordenação na linha 5 tem complexidade \emph{ $\Theta( \mid E\mid log \mid E\mid )$ } e domina a complexidade das demais operações.
+A repetição das linhas 7-17 será executado \emph{$\Theta(\mid E\mid)$} no pior caso.
+Logo, a complexidade total das linhas 9-10 será \emph{$\Theta(\mid E\mid f(\mid V\mid))$}, onde $f(\mid V\mid))$ é complexidade da função \textbf{{\color{blue}find-set}}.
+As linhas de 12 a 15 serão executados $\mid V\mid -1$ vezes no total, pois para um grafo contendo N vértices, precisamos de apenas N-1 arestas para interligar todos os nós e gerar uma árvore geradora mínima. 
+Assim, a complexidade total de execução destas linhas será \emph{ $\Theta(\mid V\mid . g(\mid V\mid)$} onde $g(\mid V\mid)$ é a complexidade de realizar \textbf{{\color{blue}union}}.
+A complexidade do algoritmo de Kruskal será então: \[ \emph{ $\Theta(\mid E\mid log \mid E\mid + \mid E\mid .f(\mid V\mid) + \mid V\mid . g(\mid V\mid)) $}\]
+A estrutura de dados UnionFind foi implementada na sua forma simples, com o uso de uma lista encadeada. Sendo assim a complexidade da função find é \emph{$\omega(n)$}, e union tem complexidade \emph{$\Theta(n)$} \cite{Cormem}. A complexidade final da implementação foi:
+\[ \emph{ $\Theta(\mid E\mid log \mid E\mid + \mid E\mid .\Omega(\mid V\mid) + \mid V\mid . \Theta(\mid V\mid)) $}\]
+
+A complexidade pode ser reduzida utilizando de uma estrutura de dados mais refinada para implementar a manipulação dos conjuntos disjuntos, como por exemplo usar uma lista encadeada e \emph{weighted-union heuristic}\cite{Cormem}, consegue-se uma complexidade de \emph{$\Theta(m+nlogn) $} para realizar as \emph{m} operações de \textbf{{\color{blue}make-set}}, \textbf{{\color{blue}find-set}} e \textbf{{\color{blue}union}} \cite{Cormem}.
 
 \subsection{Algoritmo de Prim}
-O algoritmo de Prim...
+O algoritmo de Prim...	
+
+\newpage
+\appendix
+\section{\\Algoritmos Implementados no Projeto} \label{App:AppendixA}
+
+\begin{lstlisting}[label=figura,title=Implementação do Algoritmo de Kruskal em Java]
+public class Kruskal implements GraphAlgorithm{
+	private Graph mGraph;
+	private int edges[];
+	private int edgeIndex = 0;
 	
+	public Kruskal(Graph grafo) {
+		mGraph = grafo;
+	}	
+
+	@Override
+	public void init(){
+		edgeIndex = 0;
+		for (int i = 0; i < mGraph.getVerticesCount() ; i++) {
+			Vertice vertice = mGraph.getVertices()[i];
+			UnionFind.makeSet(vertice);
+		}
+		edges = new int[mGraph.getArestasCount()];
+		for( int i = 0; i < edges.length; edges[i] = i++);
+		qsort(0, edges.length -1);
+	}
+	@Override
+	public boolean performStep() {
+		if( edgeIndex >= edges.length )
+			return true;
+		Aresta aresta 	= mGraph.getArestas()[ edges[edgeIndex]];
+		if( aresta.status == Status.WAITING ){
+			aresta.status = Status.PROCESSING;
+			return false;
+		}
+		edgeIndex++;
+		UnionElement u 	= aresta.u;
+		UnionElement v 	= aresta.v;
+		if( !UnionFind.find(u).equals(UnionFind.find(v))){
+			aresta.status = Status.TAKED;
+			UnionFind.union(u, v);
+		}else{
+			aresta.status = Status.DISCARDED;
+		}
+		return false;
+	}
+}
+\end{lstlisting}
+
+\begin{lstlisting}[title=Implementação do Algoritmo de Prims em Java]
+public class Prim implements GraphAlgorithm{
+	private Graph mGraph;
+	private AdjacencyMatrix verticesMatrix;
+	private AdjacencyMatrix matrix;
+	private boolean processing = false;
+
+	public Prim( Graph graph) {
+		mGraph = graph;
+	}
+	@Override
+	public void init() {
+		processing = false;
+		verticesMatrix = new AdjacencyMatrix(mGraph.getVerticesCount());
+		verticesMatrix.makeAdjacency(0, 0);
+		matrix = mGraph.createAdjacencyMatrix();
+	}
+
+	@Override
+	public boolean performStep() {
+		Aresta bestChoice 	= null;
+		int bestVertice 	= -1;
+		int vertices[] = verticesMatrix.getAdjacencys(0);
+		for( int v = 0; v < vertices.length; v++){
+			if( vertices[v] == 1){
+				int adjacencys[] = matrix.getAdjacencys(v);
+				for( int i = 0; i < adjacencys.length; i++){
+					if(adjacencys[i] == 1){
+						Aresta aresta = mGraph.getAresta(i, v);
+						if( aresta != null){
+							if( !processing ){
+								aresta.status = Status.PROCESSING;
+							}else if ( bestChoice != null ){
+								if( bestChoice.weight > aresta.weight ){
+									bestChoice  = aresta;
+									bestVertice = i;
+								}
+							}else{
+								bestChoice = aresta;
+								bestVertice = i;
+							}
+						}
+					}
+				}
+			}
+		}
+		if(!processing){
+			processing = true;
+			return false;
+		}
+		boolean finish = true;
+		if( bestVertice != -1 ){
+			bestChoice.status = Status.TAKED;			
+			for(int i = 0; i < vertices.length; i++){
+				if( vertices[i] == 1){
+					matrix.removeAdjacency(i, bestVertice);
+				}else{
+					finish = false;
+				}
+			}			
+			processing = false;
+			verticesMatrix.makeAdjacency(0, bestVertice);
+		}
+		return finish;
+	}
+
+
+}
+\end{lstlisting}
+
 \bibliographystyle{plain}
 \bibliography{biblio}
-
 
 \end{document}
 
