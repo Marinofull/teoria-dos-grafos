@@ -2,8 +2,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage{cludein}
 \usepackage{xcolor}
-\usepackage{algorithm2e}
 \usepackage[toc,page]{appendix}
+\usepackage{algorithm2e}
 \definecolor{light-gray}{gray}{0.5}
 % Definindo novas cores
 \definecolor{verde}{rgb}{0.25,0.5,0.35}
@@ -174,8 +174,8 @@ $\textbf{retorne} (A, W)$\;
 A complexidade do algoritmo de Prim está diretamente ligada a maneira de como é implementada a estrutura de dados em Q. Uma simples implementação utilizando matrizes de adjacência vai requerer complexidade \emph{$\Theta(\mid V\mid^2)$} e foi a estrutura de dados utilizada neste trabalho. Utilizando de uma heap binária a complexidade cai para \emph{$\Theta(\mid E\mid log\mid V\mid)$}, ainda assim é possível decrescer ainda mais a complexidade utilizando como estrutura de dados uma Fibonacci Heap com complexidade \emph{$\Theta(\mid E\mid+\mid V\mid log\mid V\mid)$} \cite{Cormem}.
 
 
-\newpage
 \appendix
+\begin{appendices}
 \section{\\Algoritmos Implementados no Projeto} \label{App:AppendixA}
 
 \begin{lstlisting}[label=figura,title=Implementação do Algoritmo de Kruskal em Java]
@@ -404,6 +404,7 @@ public class AdjacencyMatrix {
 }
 \end{lstlisting}
 
+\end{appendices}
 
 \bibliographystyle{plain}
 \bibliography{biblio}
