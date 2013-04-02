@@ -10,13 +10,36 @@
 \section{Árvore Geradora Mínima}
 Definição: Seja G=(V,E) um grafo não direcionado e conexo, G'=(V,E') é chamado de subgrafo gerador se possuí os mesmos vértices de G. Portanto se tivermos em G' uma árvore, então o subgrafo é uma árvore geradora. 
 Quando G é um grafo conexo, em que cada aresta possui um valor ou peso p(e), o peso total da árvore geradora é \[\sum_{e \in E'}p(e)\] onde p(e) é uma função que retorna o peso da aresta \emph{e}. Á árvore geradora mínima é a árvore G' que possui o menor peso total dentre todas as árvores possíveis do grafo G\cite{nogueira}. Podemos enunciar a função para encontrar a árvore geradora mínima como \[\emph{min}\sum_{e\in E'}p(e)\].
-A partir dessa noção podemos visualizar que encontrar a árvore geradora mínima não é tão trivial assim. Se propormos uma solução pela força bruta, ou seja, encontrar todas as árvores geradoras e assim então verificar qual a que possui o menor peso total. No pior caso quando temos um grafo completo(em que todos os vértices se ligam uns aos outros) teríamos $n^{n-2}$ árvores geradoras onde n é o número de nós[X], sendo assim teríamos uma solução em tempo exponencial $O(n^n)$ e inviável \nocite{*}.
+A partir dessa noção podemos visualizar que encontrar a árvore geradora mínima não é tão trivial assim. Se propormos uma solução pela força bruta, ou seja, encontrar todas as árvores geradoras e assim então verificar qual a que possui o menor peso total. No pior caso quando temos um grafo completo(em que todos os vértices se ligam uns aos outros) teríamos $n^{n-2}$ árvores geradoras onde n é o número de nós, sendo assim teríamos uma solução em tempo exponencial $O(n^n)$ e inviável \nocite{*}.
 Diante deste cenário alguns matemáticos elaboram soluções para o problema das Árvores Geradoras Mínimas, se utilizando de heurísticas gulosas para encontrar a solução ótima. No presente artigo abordaremos o Algoritmo de Kruskal e o de Prim, como estudo de caso .
 
-\includesvg[5cm]{/home/niltonvasques}{minimum_spanning_tree_2}
-
 \subsection{Algoritmo de Kruskal}
-O algoritmo de Kruskal ....
+O algoritmo de Kruskal é um algoritmo guloso, que tem por objetivo encontra uma árvore geradora mínima para um grafo conexo e valorado ( com pesos nas arestas ). Vale ressaltar que para árvores não conexas, o algoritmo encontra floresta geradora mínima, ou seja uma árvore geradora mínima para cada componente conexo do grafo.
+\subsubsection{Pseudo-código}
+\begin{enumerate}
+\item Criar uma floresta \emph{F}, onde cada vértice do grafo é uma árvore separada.
+\item Criar um conjunto \emph{S} contendo todos as arestas do grafo.
+\item Enquanto \emph{S} é não vazio:
+	\begin{enumerate}
+	\item Remova um aresta \emph{e} com peso mínimo de S.
+	\item Se \emph{e} conecta duas diferentes árvores, então adicione \emph{e} para floresta \emph{F}.
+	\item Caso contrário, discarte \emph{e}, ou seja se a escolha de \emph{e} gera um circuito em \emph{F}, discarte-a.
+	\end{enumerate}
+\end{enumerate}
+
+\subsubsection{Implementação}
+A implementação se utilizou da estrutura de dados UnionFind, para realizar as operações dos passos listados no pseudo código. No item \emph{3.} foi necessário ordernar as arestas pelo seu peso mínimo. Como algoritmo de ordenação utilizamos o QuickSort que ordena uma lista de números em tempo $\Theta\emph{(n log n)}$.
+
+\subsubsection{Análise de Complexidade}
+A estrutura de dados UnionFind mantém um conjunto de elementos particionados em vários subconjuntos não sobrepostos. O algoritmo que controla essa estrutura possui duas operações principais:
+\begin{itemize}
+\item Find: Determina de qual subconjunto um elemento pertence.
+\item Union: Faz a união de dois subconjuntos em um só subconjunto.
+\end{itemize}
+
+É interessante notar que com a operação Find, podemos verificar se dois elementos estão no mesmo conjunto, no caso particular do algoritmo de Kruskal, usando Find podemos decidir se a inclusão de uma aresta \emph{e} forma um circuito ou não.
+	Segundo \cite{Cormem} a complexidade do algoritmo UnionFind na sua forma simples é $\Theta\emph{(n)}$ por operação. Sendo assim a complexidade da nossa implementação é $\Theta\emph{(E log E)}$.
+ 
 
 \subsection{Algoritmo de Prim}
 O algoritmo de Prim...
