@@ -49,29 +49,35 @@ public class DFS implements GraphAlgorithm{
 	public boolean performStep() {
 		
 		if(stack.isEmpty()) return true;
-		Vertice u = stack.peek();
 		
-		if(next >= graph.getVerticesCount()){
-			next = 0;
-			stack.pop();
-			return false;
-		}
+		boolean step = false;
 		
-		if(matrix.checkAdjacency(u.index, next) && graph.getVertices()[next].status != Vertice.Status.CINZA){
+		while(!step){
+			Vertice u = stack.peek();
 			
-			Vertice vertexV = graph.getVertices()[next];
-			
-			if(vertexV.status == Vertice.Status.BRANCO){
-				graph.getAresta(u.index, next).status = Status.TAKED;
-				vertexV.status = Vertice.Status.CINZA;
-				stack.push(vertexV);
-			}else{
-				u.status = Vertice.Status.PRETO;
+			if(next >= graph.getVerticesCount()){
+				next = 0;
 				stack.pop();
+				return false;
 			}
-			next = 0;
-		}else{
-			next++;
+			
+			if(matrix.checkAdjacency(u.index, next) && graph.getVertices()[next].status != Vertice.Status.CINZA){
+				
+				Vertice vertexV = graph.getVertices()[next];
+				
+				if(vertexV.status == Vertice.Status.BRANCO){
+					graph.getAresta(u.index, next).status = Status.TAKED;
+					vertexV.status = Vertice.Status.CINZA;
+					stack.push(vertexV);
+				}else{
+					u.status = Vertice.Status.PRETO;
+					stack.pop();
+				}
+				next = 0;
+				step = true;
+			}else{
+				next++;
+			}
 		}
 		
 		return false;

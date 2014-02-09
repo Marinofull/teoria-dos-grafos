@@ -85,7 +85,7 @@ public class GraphApplet extends JApplet {
 			public void actionPerformed(ActionEvent arg0) {
 				while( !performStep() ){
 					try {
-						Thread.sleep(200);
+						Thread.sleep(1000);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
