@@ -8,3 +8,5 @@
 /*.out
 /Árvores Geradoras Mínimas.bbl
 /Árvores Geradoras Mínimas.blg
+*.class
+.README.md.swp

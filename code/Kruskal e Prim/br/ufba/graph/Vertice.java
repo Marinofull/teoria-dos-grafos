@@ -3,6 +3,11 @@ package br.ufba.graph;
 import br.ufba.datastructures.UnionFind.UnionElement;
 
 public class Vertice implements UnionElement{
+	
+	public enum Status{
+		NORMAL, BRANCO, PRETO, CINZA
+	}
+	
 	public int x;
 
 	public int y;
@@ -18,6 +23,8 @@ public class Vertice implements UnionElement{
 	private Vertice root;
 	
 	private Vertice parent;
+	
+	public Status status = Status.NORMAL;
 	
 
 	@Override

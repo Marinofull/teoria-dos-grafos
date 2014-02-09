@@ -40,7 +40,24 @@ public class GraphDrawer {
 		vertice.height = h;
 		g.setColor(Color.black);
 		g.drawOval((x - w / 2) - 1, (y - h / 2) - 1, w + 1, h + 1);
-		g.setColor(Color.ORANGE);
+		
+		switch(vertice.status){
+			case NORMAL:
+				g.setColor(Color.ORANGE);
+			break;
+			case BRANCO:
+				g.setColor(Color.WHITE);
+				break;
+				
+			case CINZA:
+				g.setColor(Color.GRAY);
+				break;
+				
+			case PRETO:
+				g.setColor(Color.BLACK);
+				break;
+		}
+		
 		g.fillOval(x - w / 2, y - h / 2, w, h);
 		g.setColor(Color.BLACK);
 		g.drawString(vertice.nome, x - (w - 10) / 2, (y - (h - 4) / 2)
