@@ -58,23 +58,20 @@ public class DFS implements GraphAlgorithm{
 			if(next >= graph.getVerticesCount()){
 				next = 0;
 				stack.pop();
+				u.status = Vertice.Status.PRETO;
 				return false;
 			}
 			
-			if(matrix.checkAdjacency(u.index, next) && graph.getVertices()[next].status != Vertice.Status.CINZA){
-				
-				Vertice vertexV = graph.getVertices()[next];
-				
-				if(vertexV.status == Vertice.Status.BRANCO){
+			Vertice vertexV = graph.getVertices()[next];
+			if(matrix.checkAdjacency(u.index, next) && vertexV != null 
+					&& vertexV.status == Vertice.Status.BRANCO){
+//				if(){
 					graph.getAresta(u.index, next).status = Status.TAKED;
 					vertexV.status = Vertice.Status.CINZA;
 					stack.push(vertexV);
-				}else{
-					u.status = Vertice.Status.PRETO;
-					stack.pop();
-				}
-				next = 0;
-				step = true;
+					next = 0;
+					step = true;
+//				}				
 			}else{
 				next++;
 			}
