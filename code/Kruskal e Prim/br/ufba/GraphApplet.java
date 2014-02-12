@@ -139,6 +139,7 @@ public class GraphApplet extends JApplet {
 		if( last ){
 			calcularBtn.setEnabled(false);
 			playBtn.setEnabled(false);
+			System.out.println(mAlgorithm);
 		}
 		return last;
 	}
