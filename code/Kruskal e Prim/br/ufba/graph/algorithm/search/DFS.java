@@ -66,7 +66,11 @@ public class DFS implements GraphAlgorithm{
 			if(matrix.checkAdjacency(u.index, next) && vertexV != null 
 					&& vertexV.status == Vertice.Status.BRANCO){
 //				if(){
-					graph.getAresta(u.index, next).status = Status.TAKED;
+					if(graph.getAresta(u.index, next) == null){
+						System.out.println(matrix);
+					}else{
+						graph.getAresta(u.index, next).status = Status.TAKED;
+					}
 					vertexV.status = Vertice.Status.CINZA;
 					stack.push(vertexV);
 					next = 0;
