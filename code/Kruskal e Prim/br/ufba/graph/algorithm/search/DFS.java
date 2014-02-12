@@ -13,7 +13,7 @@ import br.ufba.graph.algorithm.GraphAlgorithm;
  * link: http://www.ime.usp.br/~pf/analise_de_algoritmos/aulas/dfs.html
  */
 public class DFS implements GraphAlgorithm{
-
+	
 	private Graph graph;
 	private AdjacencyMatrix matrix;
 	private Stack<Vertice> stack = new Stack<Vertice>();
@@ -28,7 +28,7 @@ public class DFS implements GraphAlgorithm{
 	@Override
 	public void init() {
 		this.matrix = this.graph.createAdjacencyMatrix();
-
+		
 		for(int i = 0; i < graph.getVerticesCount(); i++){
 			graph.getVertices()[i].status = Vertice.Status.BRANCO;
 		}
@@ -39,44 +39,56 @@ public class DFS implements GraphAlgorithm{
 		ordemBusca = new int[graph.getVerticesCount()];
 		ordemBusca[index++] = next;
 	}
-
+	
+//	void buscaprofundidade(int matriz[][100],int qtdVert,int *vetorBP,int u,int *q){
+//		 
+//	    int v;
+//	    vetorBP[u]=1;
+//	    for(v = 0;v < qtdVert; v++)
+//	    {
+//			
+//	        if(matriz[u][v] == 1 && vetorBP[v] == 0)
+//	        {
+//	            q[++r] = v;
+//	            buscaprofundidade(matriz,qtdVert,vetorBP,v,q);
+//	        }
+//	    }
+//	}
+	
 	int next = 0;
 	@Override
 	public boolean performStep() {
-
+		
 		if(stack.isEmpty()) return true;
-
+		
 		boolean step = false;
-
+		
 		while(!step){
 			Vertice u = stack.peek();
-
+			
 			if(next >= graph.getVerticesCount()){
 				next = 0;
 				stack.pop();
+				u.status = Vertice.Status.PRETO;
 				return false;
 			}
-
-			if(matrix.checkAdjacency(u.index, next) && graph.getVertices()[next].status != Vertice.Status.CINZA){
-
-				Vertice vertexV = graph.getVertices()[next];
-
-				if(vertexV.status == Vertice.Status.BRANCO){
+			
+			Vertice vertexV = graph.getVertices()[next];
+			if(matrix.checkAdjacency(u.index, next) && vertexV != null 
+					&& vertexV.status == Vertice.Status.BRANCO){
+//				if(){
 					graph.getAresta(u.index, next).status = Status.TAKED;
 					vertexV.status = Vertice.Status.CINZA;
 					stack.push(vertexV);
 					ordemBusca[index++] = next;
-				}else{
-					u.status = Vertice.Status.PRETO;
-					stack.pop();
-				}
-				next = 0;
-				step = true;
+					next = 0;
+					step = true;
+//				}				
 			}else{
 				next++;
 			}
 		}
-
+		
 		return false;
 	}
 
