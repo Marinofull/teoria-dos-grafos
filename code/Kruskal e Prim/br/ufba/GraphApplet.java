@@ -6,19 +6,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
+import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
 import javax.swing.JApplet;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JTextField;
 
 import br.ufba.graph.Graph;
-import br.ufba.graph.algorithm.Dijkstra;
 import br.ufba.graph.algorithm.GraphAlgorithm;
 import br.ufba.graph.algorithm.minimumspanningtree.Kruskal;
 import br.ufba.graph.algorithm.minimumspanningtree.Prim;
+import br.ufba.graph.algorithm.mininumpath.Dijkstra;
 import br.ufba.graph.algorithm.search.DFS;
 import br.ufba.ui.GraphDrawer;
 
@@ -40,6 +42,9 @@ public class GraphApplet extends JApplet {
 	JButton calcularBtn;
 	JButton reiniciarBtn;
 	JButton playBtn;
+	
+	JTextField origemArea;
+	JTextField destinoArea;
 
 	/*
 	 * Controle
@@ -125,7 +130,24 @@ public class GraphApplet extends JApplet {
 	    primButton.addActionListener(alghs);
 	    dfsButton.addActionListener(alghs);
 	    dijkstraButton.addActionListener(alghs);
+	    
+	    JLabel origemLabel = new JLabel("Origem: ");
+	    origemArea = new JTextField();
+	    origemArea.setSize(200, 50);
+	    JLabel destinoLabel = new JLabel("Destino: ");
+	    destinoArea = new JTextField();
+	    destinoArea.setSize(100, 50);
+	    
+	    JPanel menuPanel = new JPanel();
+	    menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
 	
+	    JPanel paramsPanel = new JPanel();
+	    paramsPanel.setLayout(new BoxLayout(paramsPanel, BoxLayout.X_AXIS));
+	    
+	    paramsPanel.add(origemLabel);
+	    paramsPanel.add(origemArea);
+	    paramsPanel.add(destinoLabel);
+	    paramsPanel.add(destinoArea);
 	    
 		
 		buttonsPanel.add(playBtn);
@@ -136,12 +158,15 @@ public class GraphApplet extends JApplet {
 		buttonsPanel.add(dfsButton);
 		buttonsPanel.add(dijkstraButton);
 		add(panel, BorderLayout.CENTER);
-		add(buttonsPanel, BorderLayout.SOUTH);
+		menuPanel.add(buttonsPanel);
+		menuPanel.add(paramsPanel);
+		add(menuPanel, BorderLayout.SOUTH);
 		
 		loadGraph();
 	}	
 	
 	private boolean performStep() {
+		if(!checkParams()) return false;
 		boolean last = mAlgorithm.performStep();
 		mGraphDrawer.desenharGrafo();
 		if( last ){
@@ -176,6 +201,34 @@ public class GraphApplet extends JApplet {
 			loadGraph();			
 		}
 	};
+
+	private boolean checkParams() {
+		if(mAlgorithm instanceof Dijkstra){
+			try{
+				int source = Integer.valueOf(origemArea.getText());
+				if(source < 0 || source > mGrafo.getVerticesCount()){
+					JOptionPane.showMessageDialog(null, "Error: Vértice não encontrado!");
+					return false;
+				}
+				((Dijkstra)mAlgorithm).setSource(source-1);
+			}catch (Exception e2) {
+				JOptionPane.showMessageDialog(null, "Error: O campo origem precisa conter um número!");
+				return false;
+			}
+			
+			try{
+				int target = Integer.valueOf(destinoArea.getText());
+				if(target < 0 || target > mGrafo.getVerticesCount()){
+					JOptionPane.showMessageDialog(null, "Error: Vértice não encontrado!");
+					return false;
+				}
+				((Dijkstra)mAlgorithm).setTarget(target-1);
+			}catch (Exception e2) {
+				((Dijkstra)mAlgorithm).setTarget(-1);
+			}
+		}
+		return true;
+	}
 
 	
 }
