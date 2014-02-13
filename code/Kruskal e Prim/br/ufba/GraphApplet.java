@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JApplet;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -15,11 +16,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.JRadioButtonMenuItem;
 
 import br.ufba.graph.Graph;
+import br.ufba.graph.algorithm.Dijkstra;
 import br.ufba.graph.algorithm.GraphAlgorithm;
 import br.ufba.graph.algorithm.minimumspanningtree.Kruskal;
 import br.ufba.graph.algorithm.minimumspanningtree.Prim;
+import br.ufba.graph.algorithm.search.BFS;
 import br.ufba.graph.algorithm.mininumpath.Dijkstra;
 import br.ufba.graph.algorithm.search.DFS;
 import br.ufba.ui.GraphDrawer;
@@ -114,6 +118,10 @@ public class GraphApplet extends JApplet {
 	    dfsButton.setMnemonic(KeyEvent.VK_D);
 	    dfsButton.setActionCommand("DFS");
 	    
+	    JRadioButton bfsButton = new JRadioButton("BFS");
+	    bfsButton.setMnemonic(KeyEvent.VK_E);
+	    bfsButton.setActionCommand("BFS");
+
 	    JRadioButton dijkstraButton = new JRadioButton("Dijkstra");
 	    dijkstraButton.setMnemonic(KeyEvent.VK_D);
 	    dijkstraButton.setActionCommand("Dijkstra");
@@ -123,12 +131,14 @@ public class GraphApplet extends JApplet {
 	    group.add(kruskalButton);
 	    group.add(primButton);
 	    group.add(dfsButton);
+	    group.add(bfsButton);
 	    group.add(dijkstraButton);
 
 	    //Register a listener for the radio buttons.
 	    kruskalButton.addActionListener(alghs);
 	    primButton.addActionListener(alghs);
 	    dfsButton.addActionListener(alghs);
+	    bfsButton.addActionListener(alghs);
 	    dijkstraButton.addActionListener(alghs);
 	    
 	    JLabel origemLabel = new JLabel("Origem: ");
@@ -156,6 +166,7 @@ public class GraphApplet extends JApplet {
 		buttonsPanel.add(kruskalButton);
 		buttonsPanel.add(primButton);
 		buttonsPanel.add(dfsButton);
+		buttonsPanel.add(bfsButton);
 		buttonsPanel.add(dijkstraButton);
 		add(panel, BorderLayout.CENTER);
 		menuPanel.add(buttonsPanel);
@@ -195,6 +206,8 @@ public class GraphApplet extends JApplet {
 				mAlgorithm = new Prim(mGrafo);
 			}else if(e.getActionCommand().equals("DFS") ){
 				mAlgorithm = new DFS(mGrafo);
+			}else if(e.getActionCommand().equals("BFS") ){
+				mAlgorithm = new BFS(mGrafo);
 			}else if(e.getActionCommand().equals("Dijkstra") ){
 				mAlgorithm = new Dijkstra(mGrafo);
 			}
