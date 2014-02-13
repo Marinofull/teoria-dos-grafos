@@ -144,68 +144,71 @@ A estrutura de dados UnionFind foi implementada na sua forma simples, com o uso 
 \[ \emph{ $O(\mid E\mid log \mid E\mid + \mid E\mid .\Omega(\mid V\mid) + \mid V\mid . O(\mid V\mid)) $}\]
 
 A complexidade pode ser reduzida utilizando de uma estrutura de dados mais refinada para implementar a manipulação dos conjuntos disjuntos, como por exemplo usar uma lista encadeada e \emph{weighted-union heuristic}\cite{Cormem}, consegue-se uma complexidade de \emph{$O(m+nlogn) $} para realizar as \emph{m} operações de \textbf{{\color{blue}make-set}}, \textbf{{\color{blue}find-set}} e \textbf{{\color{blue}union}} \cite{Cormem}.
-\newpage
-\subsection{Algoritmo de Prim}
-Assim como o algoritmo de Kruskal's o algoritmo de Prim utilizada também uma heurística gulosa para solucinar o problema da Àrvore Geradora Mínima. A heurística utilizada é procurar o caminho mais curto, dentre todos os possíveis, de maneira similar ao algoritmo de Dijkstra. O algoritmo de Prim's tem uma propriedade de que as arestas em \emph{A} sempre forma uma árvore simples \emph{Fig.1}.
 
-\begin{figure}[h!]
-	\caption{Ilustração do Algoritmo de Prim}
-	\centering
-	\includegraphics[width=0.5\textwidth]{prim}
-	\label{fig:prim_fig}
-\end{figure}
+%\begin{comment}
+%\newpage
+%\subsection{Algoritmo de Prim}
+%Assim como o algoritmo de Kruskal's o algoritmo de Prim utilizada também uma heurística gulosa para solucinar o problema da Àrvore Geradora Mínima. A heurística utilizada é procurar o caminho mais curto, dentre todos os possíveis, de maneira similar ao algoritmo de Dijkstra. O algoritmo de Prim's tem uma propriedade de que as arestas em \emph{A} sempre forma uma árvore simples \emph{Fig.1}.
+%
+%\begin{figure}[h!]
+%	\caption{Ilustração do Algoritmo de Prim}
+%	\centering
+%	\includegraphics[width=0.5\textwidth]{prim}
+%	\label{fig:prim_fig}
+%\end{figure}
 
-O algoritmo genérico de Prim procura encontrar o caminho mais curto de um vértice para os vértices vizinhos, até que todos os vértices estejão ligados uns aos outros. O pseudo-código pode ser visualizado logo abaixo:
+%O algoritmo genérico de Prim procura encontrar o caminho mais curto de um vértice para os vértices vizinhos, até que todos os vértices estejão ligados uns aos outros. O pseudo-código pode ser visualizado logo abaixo:
 
-\begin{algorithm}[H]
-\SetAlgoLined
-\KwData{ Um grafo Conexo }
-\KwResult{ Uma árvore geradora mínima a partir de um grafo conexo }
-Escolha um vértice S para iniciar o subgrafo\;
-\While { há vértices que não estão no subgrafo }{
-	selecione uma aresta segura\;
-	insira a aresta segura e seu vértice no subgrafo\;
-}
-\caption{Pseudo Código do algoritmo de Prim}
-\end{algorithm}
+%\begin{algorithm}[H]
+%\SetAlgoLined
+%\KwData{ Um grafo Conexo }
+%\KwResult{ Uma árvore geradora mínima a partir de um grafo conexo }
+%Escolha um vértice S para iniciar o subgrafo\;
+%\While { há vértices que não estão no subgrafo }{
+%	selecione uma aresta segura\;
+%	insira a aresta segura e seu vértice no subgrafo\;
+%}
+%\caption{Pseudo Código do algoritmo de Prim}
+%\end{algorithm}
+%
+%\subsubsection{Implementação}
+%Assim como a implementação anterior o algoritmo de Prim's foi implementado em Java e fez uso da Matriz de Adjacências Binária como estrutura de dados para armazenar os vértices adjacentes de um dado vértice u.  O código fonte está disponível no Apêndice A. O pseudo código que foi utilizado para a implementação pode ser visualizado em \emph{Algorithm 4}.
 
-\subsubsection{Implementação}
-Assim como a implementação anterior o algoritmo de Prim's foi implementado em Java e fez uso da Matriz de Adjacências Binária como estrutura de dados para armazenar os vértices adjacentes de um dado vértice u.  O código fonte está disponível no Apêndice A. O pseudo código que foi utilizado para a implementação pode ser visualizado em \emph{Algorithm 4}.
+%\begin{algorithm}[H]
+%\LinesNumbered
+%\SetAlgoLined
+%\KwData{ V, E}
+%\KwResult{ A, W}
+%dist[r] $\gets$ 0;
+%Q $\gets$ V\;
+%\For{ $v \in V-\{r\} $ }{
+%	$ dist[r] \gets \infty $\;
+%}
+%$ pred[r] \gets NULL$\;
+%$ A \gets \emptyset$\;
+%$ W \gets 0$\;
+%\While{  Q não for vazio  }{
+%	remover de Q o vértice u com menor valor em dist\;
+%	$ W \gets W + dist[u] $\;
+%	\If{ $ pred[u] \neq null $ } {
+%		$ A \gets A \cup \{(pred[u],u\}$\;
+%	}
+%	\For{ $ v \in Adj[u] $ }{
+%		\If{$v \in Q$ and $dist[v] > w[u,v] $} {
+%			$ dist[v] \gets w[u,v] $\;
+%			$ pred[v] \gets u $\;
+%		}
+%	}
+%}
+%$\textbf{retorne} (A, W)$\;
+%\caption{Pseudo Código do algoritmo de Prim}
+%\end{algorithm}
+%
+%\subsubsection{Ánalise de Complexidade}
 
-\begin{algorithm}[H]
-\LinesNumbered
-\SetAlgoLined
-\KwData{ V, E}
-\KwResult{ A, W}
-dist[r] $\gets$ 0;
-Q $\gets$ V\;
-\For{ $v \in V-\{r\} $ }{
-	$ dist[r] \gets \infty $\;
-}
-$ pred[r] \gets NULL$\;
-$ A \gets \emptyset$\;
-$ W \gets 0$\;
-\While{  Q não for vazio  }{
-	remover de Q o vértice u com menor valor em dist\;
-	$ W \gets W + dist[u] $\;
-	\If{ $ pred[u] \neq null $ } {
-		$ A \gets A \cup \{(pred[u],u\}$\;
-	}
-	\For{ $ v \in Adj[u] $ }{
-		\If{$v \in Q$ and $dist[v] > w[u,v] $} {
-			$ dist[v] \gets w[u,v] $\;
-			$ pred[v] \gets u $\;
-		}
-	}
-}
-$\textbf{retorne} (A, W)$\;
-\caption{Pseudo Código do algoritmo de Prim}
-\end{algorithm}
+%A complexidade do algoritmo de Prim está diretamente ligada a maneira de como é implementada a estrutura de dados em Q. Uma simples implementação utilizando matrizes de adjacência vai requerer complexidade \emph{$O(\mid V\mid^2)$} e foi a estrutura de dados utilizada neste trabalho. Utilizando de uma heap binária a complexidade cai para \emph{$O(\mid E\mid log\mid V\mid)$}, ainda assim é possível decrescer ainda mais a complexidade utilizando como estrutura de dados uma Fibonacci Heap com complexidade \emph{$O(\mid E\mid+\mid V\mid log\mid V\mid)$} \cite{Cormem}.
 
-\subsubsection{Ánalise de Complexidade}
-
-A complexidade do algoritmo de Prim está diretamente ligada a maneira de como é implementada a estrutura de dados em Q. Uma simples implementação utilizando matrizes de adjacência vai requerer complexidade \emph{$O(\mid V\mid^2)$} e foi a estrutura de dados utilizada neste trabalho. Utilizando de uma heap binária a complexidade cai para \emph{$O(\mid E\mid log\mid V\mid)$}, ainda assim é possível decrescer ainda mais a complexidade utilizando como estrutura de dados uma Fibonacci Heap com complexidade \emph{$O(\mid E\mid+\mid V\mid log\mid V\mid)$} \cite{Cormem}.
-
+%\end{comment}
 
 \section{Caminho Mínimo em Grafos Orientados}
 
@@ -332,6 +335,56 @@ def floydWarshall(grafo):
 \end{lstlisting}
 
 \newpage
+\section{Busca em Largura ou Breadth-First-Search}
+\subsection{Definição}
+O algoritmo para busca em largura é essencialmente o algoritmo de Dijkstra onde todas as arestas possuem peso igual a 1. Quando percorremos um vértice salvamos ele para posteriormente percorrer os seus vizinhos que ainda não foram visitados, até terminar o grafo. Usamos desta vez uma lista FIFO para saber quem já foi visitado e quem não foi, e um vetor d[] contendo as distâncias do vértice para o vértice raiz.
+
+\subsection{Implementação}
+A implementação deste algoritmo de busca em largura, foi feito em Java, fez uso de matriz de adjacências binárias como estrutura de dados para armazenar os vértices adjacentes de um dado vértice. O código fonte está disponível no Apêndice. O pseudo-código que foi utilizado para a implementação da busca em profundidade pode ser visualizado no Algoritmo 8. 
+
+%PARA (todos os vértices v) FAÇA d[v]= infinito
+%d[raiz]=0; Qfifo={raiz}
+%ENQUANTO Qfifo != {} FAÇA
+%	u=Q.removeTopoDaFila
+%	PARA (v visinhos de u) FAÇA
+%		SE (d[v] == infinito) ENTÃO
+%			d[v]=d[u]+1
+%			Q.enfileira(v)
+\begin{algorithm}[H]
+\LinesNumbered
+\SetAlgoLined
+\KwData{G,w,s}
+BFS(G,s)\;
+%$ S \gets \emptyset $\;
+%$ Q \gets V[G] $\;
+%\While{ $Q = \emptyset $ }{
+%	$ u \gets EXTRACTING-MIN(Q) $\;
+%	$ S \gets S \cup \{u\} $\;
+%	\ForEach{ vertex $v \in Adj[u] $ }{
+%		RELAX(u,v,w)\;
+%	}
+\ForEach{ todos os vértices v}{
+	$ d[v] = \infty $\;
+}
+$ d[raiz] = 0$\;
+$ Qfifo = {raiz}$\;
+\While{ Qfifo $ != \emptyset $}{
+	$ u = Q.removeTopoDaFila $\;
+	\ForEach{ v visinhos de u }{
+		\If{ $ d[v] == infinito $}{
+			$ d[v] = d[u] + 1 $\;
+			$ Q.enfileira(v) $\;
+		}
+	}
+}
+
+\caption{Pseudo Código do Algoritmo de Dijkstra}
+\end{algorithm}
+
+\subsection{Análise de Complexidade}
+Como cada vértices e cada aresta são visitados uma única vez a complexidade é O(V+E), onde V é a quantidade de vértices e E a quantidade de arestas. Se o grafo for um grafo conexo, então teremos nosso \emph{$E >= V-1$}. Neste caso, a complexidade do algoritmo de busca em largura será O(E), para E a quantidade de arestas.
+
+\newpage
 \section{Busca em Profundidade ou Depth-First-Search (DFS) para Ordenação Topológica}
 
 \subsection{Definição}
@@ -437,8 +490,16 @@ Para o exemplo a seguir, a matriz adjacência seria a que é mostrada na Fig 4.
 	\caption{Exemplo de grafo direcionado a ser ordenado por profundidade}
 \end{figure}
 
+\begin{figure}[h!]
+	\caption{Exemplo de ordenação topológica que aplicamos sem perceber no cotidiano.\cite{notes-unicamp}}
+	\centering
+	\includegraphics[width=0.8\textwidth]{topologica}
+	\label{fig:topologica_fig}
+\end{figure}
+
 Uma ordenação da busca profundidade para o exemplo seria $7 \to 11 \to 2 \to 9 \to 10 \to 5 \to 8 \to 3 \to 10$.
-\newpage
+
+\clearpage
 \section{Fechamento Transitivo}
 
 \subsection{Definição}
