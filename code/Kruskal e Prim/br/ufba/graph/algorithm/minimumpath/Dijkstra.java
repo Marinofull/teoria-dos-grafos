@@ -1,4 +1,4 @@
-package br.ufba.graph.algorithm.mininumpath;
+package br.ufba.graph.algorithm.minimumpath;
 
 import java.util.ArrayList;
 import java.util.List;

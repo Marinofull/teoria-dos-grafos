@@ -18,9 +18,9 @@ import javax.swing.JTextField;
 
 import br.ufba.graph.Graph;
 import br.ufba.graph.algorithm.GraphAlgorithm;
+import br.ufba.graph.algorithm.minimumpath.Dijkstra;
 import br.ufba.graph.algorithm.minimumspanningtree.Kruskal;
 import br.ufba.graph.algorithm.minimumspanningtree.Prim;
-import br.ufba.graph.algorithm.mininumpath.Dijkstra;
 import br.ufba.graph.algorithm.search.BFS;
 import br.ufba.graph.algorithm.search.DFS;
 import br.ufba.ui.GraphDrawer;
