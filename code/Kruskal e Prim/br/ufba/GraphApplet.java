@@ -15,6 +15,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JRadioButtonMenuItem;
 
 import br.ufba.graph.Graph;
+import br.ufba.graph.algorithm.Dijkstra;
 import br.ufba.graph.algorithm.GraphAlgorithm;
 import br.ufba.graph.algorithm.minimumspanningtree.Kruskal;
 import br.ufba.graph.algorithm.minimumspanningtree.Prim;
@@ -112,6 +113,9 @@ public class GraphApplet extends JApplet {
 	    JRadioButton bfsButton = new JRadioButton("BFS");
 	    bfsButton.setMnemonic(KeyEvent.VK_E);
 	    bfsButton.setActionCommand("BFS");
+	    JRadioButton dijkstraButton = new JRadioButton("Dijkstra");
+	    dijkstraButton.setMnemonic(KeyEvent.VK_D);
+	    dijkstraButton.setActionCommand("Dijkstra");
 
 	    //Group the radio buttons.
 	    ButtonGroup group = new ButtonGroup();
@@ -119,12 +123,14 @@ public class GraphApplet extends JApplet {
 	    group.add(primButton);
 	    group.add(dfsButton);
 	    group.add(bfsButton);
+	    group.add(dijkstraButton);
 
 	    //Register a listener for the radio buttons.
 	    kruskalButton.addActionListener(alghs);
 	    primButton.addActionListener(alghs);
 	    dfsButton.addActionListener(alghs);
 	    bfsButton.addActionListener(alghs);
+	    dijkstraButton.addActionListener(alghs);
 	
 	    
 		
@@ -135,6 +141,7 @@ public class GraphApplet extends JApplet {
 		buttonsPanel.add(primButton);
 		buttonsPanel.add(dfsButton);
 		buttonsPanel.add(bfsButton);
+		buttonsPanel.add(dijkstraButton);
 		add(panel, BorderLayout.CENTER);
 		add(buttonsPanel, BorderLayout.SOUTH);
 		
@@ -172,6 +179,8 @@ public class GraphApplet extends JApplet {
 				mAlgorithm = new DFS(mGrafo);
 			}else if(e.getActionCommand().equals("BFS") ){
 				mAlgorithm = new BFS(mGrafo);
+			}else if(e.getActionCommand().equals("Dijkstra") ){
+				mAlgorithm = new Dijkstra(mGrafo);
 			}
 			loadGraph();			
 		}
