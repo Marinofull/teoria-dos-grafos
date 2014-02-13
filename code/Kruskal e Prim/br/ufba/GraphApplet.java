@@ -18,6 +18,7 @@ import br.ufba.graph.Graph;
 import br.ufba.graph.algorithm.GraphAlgorithm;
 import br.ufba.graph.algorithm.minimumspanningtree.Kruskal;
 import br.ufba.graph.algorithm.minimumspanningtree.Prim;
+import br.ufba.graph.algorithm.search.BFS;
 import br.ufba.graph.algorithm.search.DFS;
 import br.ufba.ui.GraphDrawer;
 
@@ -107,17 +108,23 @@ public class GraphApplet extends JApplet {
 	    JRadioButton dfsButton = new JRadioButton("DFS");
 	    dfsButton.setMnemonic(KeyEvent.VK_D);
 	    dfsButton.setActionCommand("DFS");
+	    
+	    JRadioButton bfsButton = new JRadioButton("BFS");
+	    bfsButton.setMnemonic(KeyEvent.VK_E);
+	    bfsButton.setActionCommand("BFS");
 
 	    //Group the radio buttons.
 	    ButtonGroup group = new ButtonGroup();
 	    group.add(kruskalButton);
 	    group.add(primButton);
 	    group.add(dfsButton);
+	    group.add(bfsButton);
 
 	    //Register a listener for the radio buttons.
 	    kruskalButton.addActionListener(alghs);
 	    primButton.addActionListener(alghs);
 	    dfsButton.addActionListener(alghs);
+	    bfsButton.addActionListener(alghs);
 	
 	    
 		
@@ -127,6 +134,7 @@ public class GraphApplet extends JApplet {
 		buttonsPanel.add(kruskalButton);
 		buttonsPanel.add(primButton);
 		buttonsPanel.add(dfsButton);
+		buttonsPanel.add(bfsButton);
 		add(panel, BorderLayout.CENTER);
 		add(buttonsPanel, BorderLayout.SOUTH);
 		
@@ -162,6 +170,8 @@ public class GraphApplet extends JApplet {
 				mAlgorithm = new Prim(mGrafo);
 			}else if(e.getActionCommand().equals("DFS") ){
 				mAlgorithm = new DFS(mGrafo);
+			}else if(e.getActionCommand().equals("BFS") ){
+				mAlgorithm = new BFS(mGrafo);
 			}
 			loadGraph();			
 		}
