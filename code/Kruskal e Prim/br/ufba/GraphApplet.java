@@ -8,7 +8,6 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
 import javax.swing.JApplet;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -16,15 +15,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import javax.swing.JRadioButtonMenuItem;
 
 import br.ufba.graph.Graph;
-import br.ufba.graph.algorithm.Dijkstra;
 import br.ufba.graph.algorithm.GraphAlgorithm;
 import br.ufba.graph.algorithm.minimumspanningtree.Kruskal;
 import br.ufba.graph.algorithm.minimumspanningtree.Prim;
-import br.ufba.graph.algorithm.search.BFS;
 import br.ufba.graph.algorithm.mininumpath.Dijkstra;
+import br.ufba.graph.algorithm.search.BFS;
 import br.ufba.graph.algorithm.search.DFS;
 import br.ufba.ui.GraphDrawer;
 
@@ -40,7 +37,7 @@ public class GraphApplet extends JApplet {
 	 * Interface
 	 */
 	private static final int APPLET_HEIGHT = 500;
-	private static final int APPLET_WIDTH = 500;
+	private static final int APPLET_WIDTH = 700;
 	
 	JPanel panel;
 	JButton calcularBtn;
