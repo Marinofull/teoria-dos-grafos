@@ -76,12 +76,18 @@ public class DFS implements GraphAlgorithm{
 			Vertice vertexV = graph.getVertices()[next];
 			if(matrix.checkAdjacency(u.index, next) && vertexV != null 
 					&& vertexV.status == Vertice.Status.BRANCO){
-					graph.getAresta(u.index, next).status = Status.TAKED;
+//				if(){
+					if(graph.getAresta(u.index, next) == null){
+						System.out.println(matrix);
+					}else{
+						graph.getAresta(u.index, next).status = Status.TAKED;
+					}
 					vertexV.status = Vertice.Status.CINZA;
 					stack.push(vertexV);
 					ordemBusca[index++] = next;
 					next = 0;
 					step = true;
+//				}				
 			}else{
 				next++;
 			}
