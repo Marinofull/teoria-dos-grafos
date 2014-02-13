@@ -59,12 +59,20 @@ public class AdjacencyMatrix {
 	
 	public boolean checkAdjacency(int u, int v){
 		
-		int bitIndex		= (u*stride);
+		int bitIndex		= (u*stride) + v;
 		int index 			= (int) (bitIndex/MEM_BLOCK_SIZE);
 		
-		int x = (v/MEM_BLOCK_SIZE) + index;
-		int y = (bitIndex % MEM_BLOCK_SIZE) + v;
+		int y = (bitIndex % MEM_BLOCK_SIZE);
 		
-		return ((matrix[x] >> y) & 0x01) == 0x01;
+		return ((matrix[index] >> y) & 0x01) == 0x01;
+	}
+	
+	@Override
+	public String toString() {
+		String result = "";
+		for(int i = 0; i < matrix.length; i++){
+			result += "["+i+"]: "+Integer.toBinaryString(matrix[i]);
+		}
+		return result;
 	}
 }
