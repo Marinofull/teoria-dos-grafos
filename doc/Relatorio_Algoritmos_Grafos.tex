@@ -125,7 +125,7 @@ A estrutura de dados UnionFind foi implementada na sua forma simples, com o uso 
 A complexidade pode ser reduzida utilizando de uma estrutura de dados mais refinada para implementar a manipulação dos conjuntos disjuntos, como por exemplo usar uma lista encadeada e \emph{weighted-union heuristic}\cite{Cormem}, consegue-se uma complexidade de \emph{$O(m+nlogn) $} para realizar as \emph{m} operações de \textbf{{\color{blue}make-set}}, \textbf{{\color{blue}find-set}} e \textbf{{\color{blue}union}} \cite{Cormem}.
 \newpage
 \subsection{Algoritmo de Prim}
-Assim como o algoritmo de Kruskal's o algoritmo de Prim utilizada também uma heurística gulosa para solucinar o problema da Àrvore Geradora Mínima. A heurística utilizada é procurar o caminho mais curto, dentre todos os possíveis, de maneira similar ao algoritmo de Djikstra. O algoritmo de Prim's tem uma propriedade de que as arestas em \emph{A} sempre forma uma árvore simples \emph{Fig.1}.
+Assim como o algoritmo de Kruskal's o algoritmo de Prim utilizada também uma heurística gulosa para solucinar o problema da Àrvore Geradora Mínima. A heurística utilizada é procurar o caminho mais curto, dentre todos os possíveis, de maneira similar ao algoritmo de Dijkstra. O algoritmo de Prim's tem uma propriedade de que as arestas em \emph{A} sempre forma uma árvore simples \emph{Fig.1}.
 
 \begin{figure}[h!]
 	\caption{Ilustração do Algoritmo de Prim}
@@ -188,7 +188,7 @@ A complexidade do algoritmo de Prim está diretamente ligada a maneira de como �
 
 \section{Caminho Mínimo em Grafos Orientados}
 
-\subsection{Algoritmo de Djikstra}
+\subsection{Algoritmo de Dijkstra}
 O algoritmo de Dijkstra, proposto pelo cientista E. W. Dijkstra, resolve o problema de encontrar o menor caminho entre dois vertices num grafo orientado ou não com arestas de peso não negativo.
 O algoritimo de Dijkstra é um metodo guloso para resolver o problema do caminho mais curto.
 A ideia por trás do método guloso é efetuar uma BFS ponderada sobre um dado grafo, a partir de um nó n. Dijkstra é comumente implementado com uma fila de prioridade como uma heap, de modo que em cada iteração, quando precisamos de obter o próximo nó a ser visitado, então este nó escolhido será o nó mais próximo ao nó n.
@@ -210,7 +210,7 @@ $ Q \gets V[G] $\;
 	}
 
 }
-\caption{Pseudo Código do Algoritmo de Djijstra}
+\caption{Pseudo Código do Algoritmo de Dijkstra}
 \end{algorithm}
 \subsubsection{Análise de Complexidade}
 Seja n o número de nós e m o número de arestas.
@@ -223,98 +223,8 @@ Com isso, o tempo que o algoritmo de Dijkstra gasta em cada nó é \emph{$O(m lo
 Até agora, consideramos apenas a computação de um único nó para todos os outros nós. Contudo a complexidade para computar a menor distância partindo de todos os nós para todos os outros nós é \emph{$O(n (n+m)log n)$}. Assim, se temos um grafo completo a complexidade seria \emph{$O(n^2 log n)$}.
 
 \subsubsection{Implementação}
-O algoritmo foi implementado na linguagem python no arquivo dijkstra.py. Utiliza a biblioteca pygraphviz, que pode ser instalada em um computador Debian/Linux com o seguinte comando:
+O algoritmo foi implementado na linguagem Java. Fez uso da matriz de adjacências para verificar se um vértice é vizinho do outro, assim como utilizou filas e conjuntos para as estruturas internas do algoritmo. O código da classe Dijkstra está disponível no Apêndice, assim como também em \cite{niltonvasques}.
 
-aptitude install python-pygraphviz
-
-O arquivo dijkstra.py possui o seguinte cabeçalho:
-\begin{lstlisting}
-from pygraphviz import *
-from random import *
-from threading import Thread
-import Image
-import os
-\end{lstlisting}
-
-A função main contem os principais passos do algoritmo: 1) cria um grafo, os vértices e as arestas já são predefinidos; 2) exibe a imagem do grafo gerado; 3) cria uma matriz contendo os menores caminhos a partir de todos o vértices para todos os vértices; 4) solicita o vértice  origem e o vértice destino; 5) exibe a imagem do menor caminho de origem para destino.
-\begin{lstlisting}
-def main():
-
-	# criao grafo
-	grafo = criarGrafo() 
-	grafo.draw("grafo.jpg", "jpg", "dot")
-	#exibe o grafo
-	Image.open("grafo.jpg").show();
-	#calcula as distancias
-	matriz = None
-	matriz = calcularDistancias(grafo)
-	//selecao dos vertices
-	o = raw_input("\nEscolha um vertice de origem: ")
-	#res = matriz.get(o)
-	d = raw_input("Escolha um vertice destino: ")
-	#desenha o menor caminho entre origem e destino
-	desenharCaminho(grafo, matriz[o][1], o, d)
-\end{lstlisting}
-A função calcularDistancias irá executar o algoritmo de Dijkstra para todos os vértices como origem irá armazenar o resultado em uma matriz.
-\begin{lstlisting}
-def calcularDistancias(grafo):
-	matriz = {}
-	for v in grafo:
-		dijk = Dijkstra()
-		#calcula menor distancia de v para todos os outros vertices
-		MenorDistancias = dijk.menorDistancias(grafo, v)
-		; Armazena a  menor distancia partindo de v ate os outros vertices
-		matriz[v] = MenorDistancias
-
-	return matriz
-\end{lstlisting}
-
-O metodo menorDistancias da classe Dijkstra executa o algoritmo de dijkstra e retorna a lista dos menores caminhos do vertice v para os outros vertices.
-\begin{lstlisting}
-	def menorDistancias(self, grafo, v):
-
-		#primeiro passo: iniciam-se os valores:
-		distancia = {}
-	
-		for no in grafo:
-			if no in grafo.neighbors(v): #se o no esta na lista dos vizinhos de v.
-				distancia[no] = (float(grafo.get_edge(v, no).attr['label']), v) # armazena o peso da aresta
-			else: # nao vizinho ou o mesmo vertice
-				distancia[no] = (float('+inf'), None) # distancia = + infinito
-	
-		# Armazena a distancia partindo de v ate os outros vertices
-		distancias = distancia.keys()
-		vertices = [v]
-		distanciaCopy = distancia.copy()
-		listaDist = [distanciaCopy]
-
-				
-		while (len(distancias) > len(vertices)):
-			ditems = distancia.items()
-			daux = []
-			for a in ditems:
-				if a[0] not in vertices:
-					daux += [a]
-
-			menor = daux[0]
-			for a in daux:
-				if a[1][0]<menor[1][0]:
-					menor = a
-
-			vertices += [menor[0]]
-
-			for no in grafo.neighbors(menor[0]):
-				if no not in vertices:
-					if distancia[no][0] > (menor[1][0]+float(grafo.get_edge(menor[0], no).attr['label'])):
-						distancia[no] = (menor[1][0]+float(grafo.get_edge(menor[0], no).attr['label']), menor[0])
-
-			
-			distanciaCopy = distancia.copy()
-			listaDist += [distanciaCopy]
-
-
-		return (vertices, distancia, listaDist)
-\end{lstlisting}
 \newpage
 \subsection{Algoritmo de Floyd-Warshall}
 O algoritmo de Floyd-Warshall usa uma formulação de programação dinâmica para resolver o problema de caminhos mais curtos de todos os pares em grafo orientado G = (V,E). O algoritmo é executado no tempo \emph{$O(V^3)$}. 
@@ -583,7 +493,7 @@ Ao final do algoritmo, a simples análise dele nos diz que a complexidade dos 3 
 \lstinputlisting[title=Implementação do Algoritmo de Kruskal em Java, language=Java, texcl=true]{Kruskal.java}
 \lstinputlisting[title=Implementação do Algoritmo de Prims em Java, language=Java, texcl=true]{Prim.java}
 
-\lstinputlisting[title=Implementação do Algoritmo de Djikstra em Python, language=Python, texcl=true]{dijkstra.py}
+\lstinputlisting[title=Implementação do Algoritmo de Dijkstra em Java, language=Java, texcl=true]{Dijkstra.java}
 \lstinputlisting[title=Implementação do Algoritmo de Floyd em Python, language=Python, texcl=true]{floyd.py}
 
 \lstinputlisting[title=Implementação do Algoritmo de Warshall em Python, language=Python, texcl=true]{warshall.py}
