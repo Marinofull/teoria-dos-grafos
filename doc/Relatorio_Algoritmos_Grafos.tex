@@ -6,6 +6,7 @@
 \usepackage{algorithm2e}
 \usepackage{url}
 \usepackage{hyperref}
+\usepackage{amsmath}
 \definecolor{light-gray}{gray}{0.5}
 % Definindo novas cores
 \definecolor{verde}{rgb}{0.25,0.5,0.35}
@@ -50,6 +51,26 @@
 
 \SetAlgorithmName{Algoritmo}{Lista de Algoritmos}
 
+\section{Representação do Grafo}
+\subsection{Matriz de Adjacências}
+Um grafo simples G = (V,E), orientado ou não, pode ser representado internamente por uma estrutura de dados denominada matriz de adjacências. A matriz de adjacências é uma matriz quadrada A de ordem $\mid V\mid$, cujas as linhas e colunas são indexadas pelos vértices em V, da seguinte forma abaixo:
+\[A\emph{(i,j)} = \begin{cases} 1\  se \emph{(i,j)} \in E \\ \emph{0 caso contrário} \end{cases}\]
+
+\begin{figure}[h!]
+	\caption{Exemplo da representação de um grafo simples não orientado em sua correspondente matriz de adjacências.\cite{slideDCC}}
+	\centering
+	\includegraphics[width=0.8\textwidth]{matrix1}
+	\label{fig:matrix1_fig}
+\end{figure}
+
+\begin{figure}[h!]
+	\caption{Exemplo de um grafo orientado simples e a matriz de adjacências correspondente.\cite{slideDCC}}
+	\centering
+	\includegraphics[width=0.8\textwidth]{matrix2}
+	\label{fig:matrix2_fig}
+\end{figure}
+
+\newpage
 \section{Árvore Geradora Mínima}
 Definição: Seja G=(V,E) um grafo não direcionado e conexo, G'=(V,E') é chamado de subgrafo gerador se possuí os mesmos vértices de G. Portanto se tivermos em G' uma árvore, então o subgrafo é uma árvore geradora. 
 Quando G é um grafo conexo, em que cada aresta possui um valor ou peso p(e), o peso total da árvore geradora é \[\sum_{e \in E'}p(e)\] onde p(e) é uma função que retorna o peso da aresta \emph{e}. Á árvore geradora mínima é a árvore G' que possui o menor peso total dentre todas as árvores possíveis do grafo G\cite{nogueira}. Podemos enunciar a função para encontrar a árvore geradora mínima como \[\emph{min}\sum_{e\in E'}p(e)\].
@@ -227,12 +248,13 @@ O algoritmo foi implementado na linguagem Java. Fez uso da matriz de adjacência
 
 \newpage
 \subsection{Algoritmo de Floyd-Warshall}
-O algoritmo de Floyd-Warshall usa uma formulação de programação dinâmica para resolver o problema de caminhos mais curtos de todos os pares em grafo orientado G = (V,E). O algoritmo é executado no tempo \emph{$O(V^3)$}. 
+O algoritmo de Floyd-Warshall usa uma formulação de programação dinâmica para resolver o problema de caminhos mais curtos de todos os pares em grafo orientado G = (V,E). O algoritmo é executado no tempo \emph{$O(V^3)$}. É importante ressaltar que este algoritmo também pode ser usado para determinar se um grafo tem fecho transitivo, ou seja, se há caminho entre todos os vértices do grafo\cite{yorkCollege}.
+
 O algoritmo de Floyd-Warshall se baseia na observação a seguir. Sejan V = {1,2,...,n} os vértices de G, e considere um subconjunto {1,2,...,k} de vertices  para algum k. Para qualquer par de vértices $i,j \in V$, considere todos os caminhos desde i até j cujos vértices intermediários são todos traçados a partir de {1,2,...,k}, e seja p um caminho de peso minimo dentre eles. O algoritmo de Floyd-Warshal explora um relacionamento entre o caminho p e caminhos mais curtos desde i até j com todos vértices intermediários no conjunto{1,2,...,k-1}. O Relacionamento depende do fato de k ser ou não um vértice intermediário do caminho p.
 
 Se k não é um vértice intermediário do caminho p, então todos os vértices intermediários do caminho p estão no conjunto {1,2,...,k-1}. Desse modo, um caminho mais curto desde o vértice i até o j com todos os intermediários no conjunto {1,2,...,k-1} também é um caminho mais curto desde i até j com todos os vértices intermediários no conjunto {1,2,...,k}.
 
-Se k é um vertice intermediário do caminho p, então desmembramos p em $ip_1kp_2j$. P1 é um caminho mais curto desde i até k com todos os vértices intermediários no conjunto {1,2,...,k}. Como o vértice k não é um vertice intermediário do caminho p1, vemos que p1 é um caminho mais curto desde i até k com todos os vértices intermediários no conjunto {1,2,...,k-1}. De modo semelhante, p2 é um caminho mais curto até o vértice j com todos os vértices intermediários no conjunto {1,2,...,k-1}.
+Se k é um vertice intermediário do caminho p, então desmembramos p em $ip_1kp_2j$. P1 é um caminho mais curto desde i até k com todos os vértices intermediários no conjunto {1,2,...,k}. Como o vértice k não é um vertice intermediário do caminho p1, vemos que p1 é um caminho mais curto desde i até k com todos os vértices intermediários no conjunto {1,2,...,k-1}. De modo semelhante, p2 é um caminho mais curto até o vértice j com todos os vértices intermediários no conjunto {1,2,...,k-1}. 
 
 \begin{figure}[h!]
 	\centering
