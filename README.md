@@ -5,7 +5,7 @@ Disciplina: Teoria dos Grafos
 Professor: Steffen   
 
 
-Árvore Geradora Mínima
+Algoritmos
 -----------------------------------
 * Kruskal
 * Prim
